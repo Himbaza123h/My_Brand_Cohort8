@@ -1,2 +1,2 @@
-# My_Brand_Portifolio
-Here is the real
+# My Brand~Cohort 8
+ Here is where everything began!!!!
