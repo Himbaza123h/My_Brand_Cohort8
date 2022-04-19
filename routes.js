@@ -49,7 +49,7 @@ router.patch("/posts/:id", async (req, res) => {
 		}
 
 		if (req.body.content) {
-			post.content = req.body.content
+			post.content = req.body.content,
 			post.comment = req.body.comment,
 			post.likes = req.body.likes
 		}
