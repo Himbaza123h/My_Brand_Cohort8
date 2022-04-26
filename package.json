@@ -35,15 +35,15 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.1.8",
     "swagger-jsdoc": "^6.1.0",
-    "swagger-ui-express": "^4.3.0"
-  },
-  "devDependencies": {
     "@babel/cli": "^7.16.8",
     "@babel/core": "^7.16.12",
     "@babel/node": "^7.16.8",
-    "@babel/preset-env": "^7.16.11",
-    "@babel/register": "^7.16.9",
     "babel-loader": "^8.2.3",
+    "@babel/preset-env": "^7.16.11",
+    "swagger-ui-express": "^4.3.0"
+  },
+  "devDependencies": {
+    "@babel/register": "^7.16.9",
     "babel-plugin-istanbul": "^6.1.1",
     "babel-polyfill": "^6.26.0",
     "chai": "^4.3.6",
