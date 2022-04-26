@@ -1,0 +1,20 @@
+{
+    "presets": ["@babel/preset-env"],
+    "env":{
+        "production":{
+            "presets":[
+                [
+                    "@babel/preset-env",
+                    {
+                        "targets": "> 0.25%, not dead"
+                    }
+               ]
+            ],
+            "plugins": ["istanbul"]
+        }
+    }
+<<<<<<< HEAD
+}
+=======
+}
+>>>>>>> 79f5ae40fbbbec44a2d047723310d7dd31d90716

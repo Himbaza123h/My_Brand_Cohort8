@@ -1,0 +1,4 @@
+{ 
+    "DBHost": "mongodb+srv://Alain_Honore:Okelokelo1@alain-honore.yxoq9.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+    "secret":"myblog"
+}
