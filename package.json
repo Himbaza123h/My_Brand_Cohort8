@@ -15,12 +15,7 @@
     "type": "git",
     "url": "git+https://github.com/Himbaza123h/My_Brand_Cohort8.git"
   },
-<<<<<<< HEAD
-  "author": "Alain Honore",
-=======
-  "author": "HIMBAZA Alain Honore",
->>>>>>> 79f5ae40fbbbec44a2d047723310d7dd31d90716
-  "license": "ISC",
+   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Himbaza123h/My_Brand_Cohort8/issues"
   },
