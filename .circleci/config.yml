@@ -20,6 +20,11 @@ jobs:
           command: npm run test
           name: Run tests
       - run:
+          command: npm run coverage
+          name: coverage 
+      - coveralls/upload
+
+      - run:
           command: npm run build
           name: Build app
       - persist_to_workspace:
