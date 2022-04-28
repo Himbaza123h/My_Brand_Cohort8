@@ -6,7 +6,7 @@ const {validateUser,User} = require("../models/User")
 const validateMiddleWare = require('../middlewares/validateMiddleware')
 
 router.get("/",(req,res)=>{
-    res.send({Message:"This is the sign up page"})
+res.send({Message:"This is the sign up page"})
 })
 
 /**
@@ -23,7 +23,7 @@ router.get("/",(req,res)=>{
  *             schema:
  *               type: object
  *               properties:
- *                 username:
+ *                 email:
  *                   type: string
  *                 password:
  *                   type: string  
@@ -46,7 +46,7 @@ router.get("/",(req,res)=>{
 router.post("/", validateMiddleWare(validateUser), async(req,res)=>{
 try {    
 
-    const userExist = await User.findOne({email: req.body.email})
+const userExist = await User.findOne({email: req.body.email})
     
     if (userExist) return res.status(400).send("email Already Taken")
     const salt = await bcrypt.genSalt();

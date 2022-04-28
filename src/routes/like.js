@@ -42,7 +42,7 @@ import { verifyToken } from "../controllers/verifyToken";
 
 router.get("/",  async(req,res)=>{
     try {
-        const likes = await Like.find({});
+    const likes = await Like.find({});
         res.status(200).send(likes);
     } catch (error){
         res.status(500).send({error:"Problem fetching likes"})
@@ -75,7 +75,7 @@ router.get("/",  async(req,res)=>{
 router.get("/article/:id", async (req,res) =>{
     try {
         const likes = await Like.find({articleId:req.params.id})
-    
+
         res.status(200).send({likes: likes.length})   
     } catch(error)  {
         // console.error(error);

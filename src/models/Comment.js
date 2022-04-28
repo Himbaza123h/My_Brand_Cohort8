@@ -13,7 +13,7 @@ const Joi = require('@hapi/joi')
 const Comment = mongoose.model("Comment",schema);
 
 const validateComment = (comment) => {
-  const schema = Joi.object({
+const schema = Joi.object({
       articleId:Joi.string().required(),
       comment:Joi.string().min(3).max(400),
   })

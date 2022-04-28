@@ -13,9 +13,9 @@ const Like = mongoose.model("Like",schema);
 
 const validateLike = (like) => {
   const schema = Joi.object({
-      articleId:Joi.string().required(),
+  articleId:Joi.string().required(),
   })
-  return schema.validate(like)
+return schema.validate(like)
 }
 
 module.exports = {

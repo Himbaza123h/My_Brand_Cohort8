@@ -17,7 +17,7 @@ const schema = new mongoose.Schema({
 const Query = mongoose.model("Query",schema);
 
 const validateQuery = (query) => {
-  const schema = Joi.object({
+const schema = Joi.object({
       username: Joi.string().min(5).max(500).required(),
       email: Joi.string().email().min(5).max(1024).required(),
       subject: Joi.string().min(10).max(500).required(),

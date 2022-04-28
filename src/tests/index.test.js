@@ -3,7 +3,6 @@ const chai = require("chai");
 const chaiHttp = require("chai-http")
 const config = require("config")
 let should = chai.should();
-
 //to be used to test private routes
 let token,articleId;
 

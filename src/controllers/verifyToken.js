@@ -5,8 +5,8 @@ const config = require("config");
 
 // Verify Token
 function verifyToken(req, res, next) {
-  try{
-    const bearerHeader = req.headers.authorization;
+try{
+  const bearerHeader = req.headers.authorization;
     const bearerToken = bearerHeader && bearerHeader.split(' ')[1];
     if (bearerHeader == null) return res.sendStatus(401);
 

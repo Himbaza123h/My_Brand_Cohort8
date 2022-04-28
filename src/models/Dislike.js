@@ -12,10 +12,10 @@ const Joi = require('@hapi/joi')
 const Dislike = mongoose.model("Dislike",schema);
 
 const validateDislike = (dislike) => {
-  const schema = Joi.object({
+const schema = Joi.object({
       articleId:Joi.string().required(),
   })
-  return schema.validate(dislike)
+return schema.validate(dislike)
 }
 
 module.exports = {

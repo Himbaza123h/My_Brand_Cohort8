@@ -9,7 +9,7 @@ const config = require("config");
 
 router.get("/",async (req,res)=>{
    // const users = await User.find()
-   try {
+try {
     res.status.send({Message: "This should be the login page rendered"})       
    } catch (error) {
        res.status(404).send("Login resource not found")
@@ -30,7 +30,7 @@ router.get("/",async (req,res)=>{
  *             schema:
  *               type: object
  *               properties:
- *                 username:
+ *                 email:
  *                   type: string
  *                 password:
  *                   type: string  
@@ -50,7 +50,7 @@ router.get("/",async (req,res)=>{
  */
 
 router.post("/",async(req,res)=>{
-   const user = await User.findOne({email: req.body.email})
+ const user = await User.findOne({email: req.body.email})
   
    if (user == null) {
        return res.status(400).send({"Message":"Cannot Find User"})

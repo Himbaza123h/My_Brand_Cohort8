@@ -34,21 +34,21 @@ import validateMiddleware from "../middlewares/validateMiddleware";
  *         heading:
  *           type: string
  *           description: heading of the article
- *           example: Manchester United boss Ralf Rangnick believes club getting better
+ *           example: I would like to appreciate whoever brought Andela training because it is so helpful
  *         content: 
  *           type: string
  *           description: Detailed contents of the article
- *           example: The Old Trafford defeat by Chris Wilder's Championship side ended any realistic hope of United winning their first domestic silverware since 2017.
+ *           example: Andela TLP is a program that helped us to discover the pragramming talents that were hidden in us!!
  *         image:
  *           type: string
  *           description: The image in the article.
- *           example: smilingcat.png
+ *           example: marketing.jpg
  */
 
 
 router.get("/",  async(req,res)=>{
     try {
-        const articles = await Article.find({});
+    const articles = await Article.find({});
         res.status(200).send(articles);
     } catch (error){
         res.status(404).send({error:"Problem getting articles"})
@@ -59,7 +59,7 @@ router.get("/",  async(req,res)=>{
  * @swagger
  * "/article/{articleId}":
  *   get:
- *     summary: Find article by ID
+ *     summary: Find article based on its ID
  *     tags: 
  *       - Article
  *     parameters:
@@ -82,7 +82,7 @@ router.get("/",  async(req,res)=>{
 
 router.get("/:id", async (req,res) =>{
     try {
-        const article = await Article.findOne({ _id: req.params.id})
+     const article = await Article.findOne({ _id: req.params.id})
         if (article) {
             res.status(200).send(article)   
         }else{
@@ -148,7 +148,7 @@ router.post("/",verifyToken, validateMiddleware(validateArticle), async (req,res
  * @swagger
  * "/article/{articleId}":
  *   delete:
- *     summary: Delete article according to ID
+ *     summary: Delete article based on its ID
  *     tags: 
  *       - Article
  *     parameters:
@@ -196,7 +196,7 @@ router.put("/:id",verifyToken, async (req, res) => {
             if (req.body.content) {
                 article.content = req.body.content
             }
-            if (req.body.image) {
+             if (req.body.image) {
                 article.image = req.body.image
             }
             await article.save()
