@@ -35,3 +35,6 @@ workflows:
   test_my_app:
     jobs:
       - build_and_test
+notify: 
+  webhooks: 
+    - url: https://coveralls.io/webhook?repo_token=${process.env.COVERALLS_REPO_TOKEN}

@@ -45,7 +45,7 @@ router.get("/",  async(req,res)=>{
     const likes = await Like.find({});
         res.status(200).send(likes);
     } catch (error){
-        res.status(500).send({error:"Problem fetching likes"})
+      res.status(500).send({error:"Problem fetching likes"})
       //  console.log(error)
     }
 

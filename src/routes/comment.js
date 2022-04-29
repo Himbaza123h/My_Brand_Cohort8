@@ -67,7 +67,7 @@ router.get("/:id", async (req,res) =>{
 
 router.get("/article/:id", async (req,res) =>{
     try {
-        const comments = await Comment.find({articleId:req.params.id})
+    const comments = await Comment.find({articleId:req.params.id})
         if (comments) {
             res.send(comments)   
         }else{

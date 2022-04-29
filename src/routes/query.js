@@ -107,7 +107,7 @@ router.post("/", validateMiddleware(validateQuery) ,async (req,res) =>{
     await newQuery.save();
     res.status(201).send({"Message":"New Query submitted successfully"})     
    } catch (error){
-       console.log(req.body)
+     console.log(req.body)
        res.status(400).send({error:"There was a problem submitting the query"})
    }
 })

@@ -7,18 +7,18 @@ const config = require("config");
 function verifyToken(req, res, next) {
 try{
   const bearerHeader = req.headers.authorization;
-    const bearerToken = bearerHeader && bearerHeader.split(' ')[1];
+   const bearerToken = bearerHeader && bearerHeader.split(' ')[1];
     if (bearerHeader == null) return res.sendStatus(401);
 
     jwt.verify(bearerToken, config.secret, (err,user) =>{
-      // console.log(err)
+       // console.log(err)
         if (err) return res.sendStatus(403);
-        req.user = user;
+       req.user = user;
         next();
     })
   }
   catch(err){
-    console.log(err)
+  console.log(err)
   }
   
   }

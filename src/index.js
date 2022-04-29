@@ -78,7 +78,7 @@ const connectDB = async () => {
                 app.use(express.json())
                  
                 //middlewares for routes
-                app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+               app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
                 app.use("/",api)
                 app.use("/article",articleRoutes)
@@ -99,7 +99,7 @@ const connectDB = async () => {
         })
             .catch(function (error) {
                 console.log(`Unable to connect to the Mongo db  ${error} `);
-            });
+          });
     };
     
     // use as a function        

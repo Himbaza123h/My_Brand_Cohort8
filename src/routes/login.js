@@ -12,7 +12,7 @@ router.get("/",async (req,res)=>{
 try {
     res.status.send({Message: "This should be the login page rendered"})       
    } catch (error) {
-       res.status(404).send("Login resource not found")
+    res.status(404).send("Login resource not found")
    }
 })
 

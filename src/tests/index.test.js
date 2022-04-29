@@ -14,7 +14,6 @@ process.env.NODE_ENV = 'test';
 const { Article } = require("../models/Article");
 const { Query } = require("../models/Query");
 const { User } = require("../models/User");
-
 //Require the dev-dependencies
 let server = require('../index');
 

@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt")
 
 const {validateUser,User} = require("../models/User")
 const validateMiddleWare = require('../middlewares/validateMiddleware')
-
+ 
 router.get("/",(req,res)=>{
 res.send({Message:"This is the sign up page"})
 })
