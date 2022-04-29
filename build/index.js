@@ -50,7 +50,7 @@ var swaggerDefinition = {
     url: 'https://github.com/Himbaza123h/My_Brand_Cohort8'
   },
   servers: [{
-    url: 'http'
+    url: 'http://localhost:5000'
   }],
   security: [{
     bearerAuth: []

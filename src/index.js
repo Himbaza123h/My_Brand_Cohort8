@@ -36,7 +36,7 @@ const swaggerDefinition = {
       },
       servers: [
         {
-          url: 'http'
+          url: 'http://localhost:5000'
         }]
         ,
         security: [
@@ -71,7 +71,7 @@ const connectDB = async () => {
         await mongoose.connect(config.DBHost, { useNewUrlParser: true, useUnifiedTopology: true })
         .then(()=>{
                 //middlewares
-              app.use(cors({
+            app.use(cors({
                   origin: '*'
                 }))
                 
