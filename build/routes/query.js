@@ -53,11 +53,11 @@ var validateMiddleware = require("../middlewares/validateMiddleware");
  *         name:
  *           type: string
  *           description: The user's name.
- *           example: Alain Honore
+ *           example: Gafuku Ramos
  *         mail:
  *           type: string
  *           description: The user's email.
- *           example: himbazaalain022@gmail.com
+ *           example: gafuku@gmail.com
  *         subject:
  *           type: string
  *           description: the query subject.
@@ -65,7 +65,7 @@ var validateMiddleware = require("../middlewares/validateMiddleware");
  *         message:
  *           type: string
  *           description: The user's message in the query.
- *           example: i want to link up and have a coversation with Honore's family
+ *           example: i want to link up and talk about gafuku family
  */
 router.get("/", _verifyToken.verifyToken, /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(req, res) {

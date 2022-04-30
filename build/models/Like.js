@@ -5,6 +5,10 @@ var mongoose = require("mongoose");
 var Joi = require('@hapi/joi');
 
 var schema = new mongoose.Schema({
+  likeId: {
+    type: String,
+    required: true
+  },
   articleId: {
     type: String,
     required: true

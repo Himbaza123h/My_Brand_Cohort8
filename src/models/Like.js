@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const Joi = require('@hapi/joi')
 
  const schema = new mongoose.Schema({
+   likeId:{type:String, required:true},
      articleId:{type:String, required:true},
      userId:{type: String , required: true},     
  },{

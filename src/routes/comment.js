@@ -44,7 +44,7 @@ import { User } from "../models/User";
 
 router.get("/",  async(req,res)=>{
     try {
-     const comments = await Comment.find({});
+        const comments = await Comment.find({});
         res.status(200).send(comments);
     } catch (error){
         // console.log(error)
@@ -57,7 +57,7 @@ router.get("/",  async(req,res)=>{
 router.get("/:id", async (req,res) =>{
     try {
         const comments = await Comment.find({})
-
+    
         res.send({comments: comments})   
     } catch(error)  {
         console.error(error);
@@ -67,7 +67,7 @@ router.get("/:id", async (req,res) =>{
 
 router.get("/article/:id", async (req,res) =>{
     try {
-    const comments = await Comment.find({articleId:req.params.id})
+        const comments = await Comment.find({articleId:req.params.id})
         if (comments) {
             res.send(comments)   
         }else{
@@ -90,7 +90,7 @@ router.get("/user/:id", async (req,res) =>{
         }
     } catch(error)  {
        // console.error(error);
-    res.sendStatus(206).send("User not found");
+        res.sendStatus(206).send("User not found");
     }
 })
 
@@ -98,7 +98,7 @@ router.get("/user/:id", async (req,res) =>{
 * @swagger
 * /comment:
 *   post:
-*     summary: Insert New Comment
+*     summary: Add New Comment
 *     tags:
 *       - Comment
 *     requestBody:

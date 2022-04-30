@@ -5,7 +5,7 @@ const options = {
   definition: {
      openapi: '3.0.0',
     info: {
-      title: 'Express Api For my Brand',
+      title: 'My-Brand-Cohort8 Alain Honore',
       version: '1.0.0',
     },
     paths: {},

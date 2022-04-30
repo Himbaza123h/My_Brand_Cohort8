@@ -59,7 +59,7 @@ router.get("/", /*#__PURE__*/function () {
  *             schema:
  *               type: object
  *               properties:
- *                 username:
+ *                 email:
  *                   type: string
  *                 password:
  *                   type: string  

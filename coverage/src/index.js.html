@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">60.52% </span>
+                <span class="strong">97.36% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>23/38</span>
+                <span class='fraction'>37/38</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">42.85% </span>
+                <span class="strong">85.71% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>3/7</span>
+                <span class='fraction'>6/7</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">83.33% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>3/6</span>
+                <span class='fraction'>5/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">59.45% </span>
+                <span class="strong">97.29% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>22/37</span>
+                <span class='fraction'>36/37</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -239,33 +239,33 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -315,7 +315,7 @@ const swaggerDefinition = {
       },
       servers: [
         {
-          url: 'http'
+          url: 'http://localhost:5000'
         }]
         ,
         security: [
@@ -346,33 +346,33 @@ const swaggerSpec = swaggerJSDoc(options);
 &nbsp;
 const app = express();
 &nbsp;
-const connectDB = <span class="branch-2 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >async () =&gt; {</span></span>
+const connectDB = async () =&gt; {
         await mongoose.connect(config.DBHost, { useNewUrlParser: true, useUnifiedTopology: true })
-        .then(<span class="fstat-no" title="function not covered" >()=&gt;{</span>
+        .then(()=&gt;{
                 //middlewares
-<span class="cstat-no" title="statement not covered" >            app.</span>use(cors({
+            app.use(cors({
                   origin: '*'
                 }))
                 
-<span class="cstat-no" title="statement not covered" >                app.</span>use(express.json())
+                app.use(express.json())
                  
                 //middlewares for routes
-<span class="cstat-no" title="statement not covered" >               app.</span>use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+               app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 &nbsp;
-<span class="cstat-no" title="statement not covered" >                app.</span>use("/",api)
-<span class="cstat-no" title="statement not covered" >                app.</span>use("/article",articleRoutes)
-<span class="cstat-no" title="statement not covered" >                app.</span>use("/query",queryRouter)
-<span class="cstat-no" title="statement not covered" >                app.</span>use("/like",likeRouter)
-<span class="cstat-no" title="statement not covered" >                app.</span>use("/comment",commentRouter)
+                app.use("/",api)
+                app.use("/article",articleRoutes)
+                app.use("/query",queryRouter)
+                app.use("/like",likeRouter)
+                app.use("/comment",commentRouter)
 &nbsp;
-<span class="cstat-no" title="statement not covered" >                app.</span>use("/login", loginRouter)
-<span class="cstat-no" title="statement not covered" >                app.</span>use("/signup", signupRouter)
+                app.use("/login", loginRouter)
+                app.use("/signup", signupRouter)
 &nbsp;
-<span class="cstat-no" title="statement not covered" >                app.</span>set("port",PORT)
+                app.set("port",PORT)
 &nbsp;
-<span class="cstat-no" title="statement not covered" >                app.</span>listen(PORT, <span class="fstat-no" title="function not covered" >() =&gt;{</span>
-<span class="cstat-no" title="statement not covered" >                  if(config.util.getEnv('NODE_ENV') != 'test'){</span>
-<span class="cstat-no" title="statement not covered" >                    console.</span>log("server started on port "+PORT)
+                app.listen(PORT, () =&gt;{
+                  <span class="missing-if-branch" title="else path not taken" >E</span>if(config.util.getEnv('NODE_ENV') != 'test'){
+                    console.log("server started on port "+PORT)
                     } 
                   })
         })
@@ -391,7 +391,7 @@ const connectDB = <span class="branch-2 cbranch-no" title="branch not covered" >
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Fri Apr 29 2022 14:38:33 GMT+0200 (Central Africa Time)
+                at Sat Apr 30 2022 21:38:51 GMT+0200 (Central Africa Time)
             </div>
         <script src="../prettify.js"></script>
         <script>

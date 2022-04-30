@@ -43,11 +43,11 @@ import { verifyToken } from "../controllers/verifyToken";
  *         name:
  *           type: string
  *           description: The user's name.
- *           example: Alain Honore
+ *           example: Gafuku Ramos
  *         mail:
  *           type: string
  *           description: The user's email.
- *           example: himbazaalain022@gmail.com
+ *           example: gafuku@gmail.com
  *         subject:
  *           type: string
  *           description: the query subject.
@@ -55,14 +55,14 @@ import { verifyToken } from "../controllers/verifyToken";
  *         message:
  *           type: string
  *           description: The user's message in the query.
- *           example: i want to link up and have a coversation with Honore's family
+ *           example: i want to link up and talk about gafuku family
  */
 
 router.get("/", verifyToken ,async (req,res)=>{
     try {
-const queries = await  Query.find();
+    const queries = await  Query.find();
     const user = req.user;
-      res.status(200).send(queries);
+         res.status(200).send(queries);
     } catch (error) {
         res.status(404).send({Message: "Problem getting articles"})
     }
@@ -105,9 +105,9 @@ router.post("/", validateMiddleware(validateQuery) ,async (req,res) =>{
         })
 
     await newQuery.save();
-res.status(201).send({"Message":"New Query submitted successfully"})     
+    res.status(201).send({"Message":"New Query submitted successfully"})     
    } catch (error){
-     console.log(req.body)
+       console.log(req.body)
        res.status(400).send({error:"There was a problem submitting the query"})
    }
 })

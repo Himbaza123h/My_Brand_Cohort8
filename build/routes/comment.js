@@ -221,7 +221,7 @@ router.get("/user/:id", /*#__PURE__*/function () {
 * @swagger
 * /comment:
 *   post:
-*     summary: Insert New Comment
+*     summary: Add New Comment
 *     tags:
 *       - Comment
 *     requestBody:

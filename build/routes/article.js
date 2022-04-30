@@ -48,15 +48,15 @@ var validateMiddleWare = require('../middlewares/validateMiddleware');
  *         heading:
  *           type: string
  *           description: heading of the article
- *           example: I would like to appreciate whoever brought Andela training because it is so helpful
+ *           example: Manchester United boss Ralf Rangnick believes club getting better
  *         content: 
  *           type: string
  *           description: Detailed contents of the article
- *           example: Andela TLP is a program that helped us to discover the pragramming talents that were hidden in us!!
+ *           example: The Old Trafford defeat by Chris Wilder's Championship side ended any realistic hope of United winning their first domestic silverware since 2017.
  *         image:
  *           type: string
  *           description: The image in the article.
- *           example: marketing.jpg
+ *           example: smilingcat.png
  */
 router.get("/", /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(req, res) {
@@ -98,7 +98,7 @@ router.get("/", /*#__PURE__*/function () {
  * @swagger
  * "/article/{articleId}":
  *   get:
- *     summary: Find article based on its ID
+ *     summary: Find article by ID
  *     tags: 
  *       - Article
  *     parameters:
@@ -243,7 +243,7 @@ router.post("/", _verifyToken.verifyToken, (0, _validateMiddleware["default"])(v
  * @swagger
  * "/article/{articleId}":
  *   delete:
- *     summary: Delete article based on its ID
+ *     summary: Delete article according to ID
  *     tags: 
  *       - Article
  *     parameters:

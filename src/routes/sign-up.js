@@ -23,7 +23,7 @@ router.get("/",(req,res)=>{
  *             schema:
  *               type: object
  *               properties:
- *                 username:
+ *                 email:
  *                   type: string
  *                 password:
  *                   type: string  

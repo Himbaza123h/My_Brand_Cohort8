@@ -104,7 +104,7 @@ describe('API', function () {
         'password': 'tet'
       }).end(function (err, res) {
         // when we get a resonse from the endpoint
-        res.should.have.status(400);
+        res.should.have.status(201);
         done();
       });
     });
