@@ -258,7 +258,7 @@ router.get("/user/:id", /*#__PURE__*/function () {
 *         comment:
 *           type: string
 *           description: comment.
-*           example: This swagger docs is great
+*           example: I appreciate to be with you in this team
 */
 
 router.post("/", _verifyToken.verifyToken, validateMiddleWare(validateComment), /*#__PURE__*/function () {
@@ -416,7 +416,7 @@ router.get("/:id", /*#__PURE__*/function () {
 }());
 /**
  * @swagger
- * "/comment/{commentId}":
+ * "/Comments/{commentId}":
  *   delete:
  *     summary: Delete comment according to ID
  *     tags: 

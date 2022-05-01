@@ -21,7 +21,7 @@ const req = require("express/lib/request");
 const swaggerDefinition = {
         openapi: '3.0.0',
         info: {
-          title: 'Express API for My Blog',
+          title: 'My-Brand-Cohort8 ~ Alain Honore',
           version: '1.0.0',
         },
         description:

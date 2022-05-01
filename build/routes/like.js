@@ -400,7 +400,7 @@ router.post("/", _verifyToken.verifyToken, validateMiddleWare(validateLike), /*#
 }());
 /**
  * @swagger
- * "/like/{articleId}":
+ * "/like/Dislike":
  *   delete:
  *     summary: Dislike an article
  *     tags: 

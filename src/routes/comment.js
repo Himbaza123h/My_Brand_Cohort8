@@ -132,7 +132,7 @@ router.get("/user/:id", async (req,res) =>{
 *         comment:
 *           type: string
 *           description: comment.
-*           example: This swagger docs is great
+*           example: I appreciate to be with you in this team
 */
 
 router.post("/",verifyToken,validateMiddleWare(validateComment) , async (req,res) =>{
@@ -165,7 +165,7 @@ router.delete("/:id", verifyToken,validateMiddleWare(validateComment), async (re
 
 /**
  * @swagger
- * "/comment/{CommentId}":
+ * "/comments/{CommentId}":
  *   get:
  *     summary: Find Comment by its ID
  *     tags: 
@@ -205,7 +205,7 @@ router.delete("/:id", verifyToken,validateMiddleWare(validateComment), async (re
 
 /**
  * @swagger
- * "/comment/{commentId}":
+ * "/comments/{commentId}":
  *   delete:
  *     summary: Delete comment according to ID
  *     tags: 

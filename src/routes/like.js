@@ -185,7 +185,7 @@ router.post("/",verifyToken,validateMiddleWare(validateLike) , async (req,res) =
 
 /**
  * @swagger
- * "/like/{articleId}":
+ * "/like/Dislike":
  *   delete:
  *     summary: Dislike an article
  *     tags: 

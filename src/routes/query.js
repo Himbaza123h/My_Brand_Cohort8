@@ -11,7 +11,7 @@ import { Article } from "../models/Article";
  * @swagger
  * /query:
  *   get:
- *     summary: GET a Query
+ *     summary: GET a list of queries
  *     tags:
  *       - Query
  *     responses:
@@ -113,7 +113,7 @@ router.post("/", validateMiddleware(validateQuery) ,async (req,res) =>{
 })
 /**
  * @swagger
- * "/query/{QueryId}":
+ * "/queries/{QueryId}":
  *   get:
  *     summary: Find Query by its ID
  *     tags: 
@@ -155,7 +155,7 @@ router.post("/", validateMiddleware(validateQuery) ,async (req,res) =>{
 
 /**
  * @swagger
- * "/query/{QueryId}":
+ * "/queries/{QueryId}":
  *   delete:
  *     summary: Delete a Query according to its ID
  *     tags: 

@@ -37,7 +37,7 @@ var req = require("express/lib/request");
 var swaggerDefinition = {
   openapi: '3.0.0',
   info: {
-    title: 'Express API for My Blog',
+    title: 'My-Brand-Cohort8 ~ Alain Honore',
     version: '1.0.0'
   },
   description: 'This is a REST API application made with Express. It retrieves data from Mongodb using mongoose.',

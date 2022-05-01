@@ -12,7 +12,7 @@ import validateMiddleware from "../middlewares/validateMiddleware";
  *   bearerAuth: []
  * /article:
  *   get:
- *     summary: GET Articles
+ *     summary: GET a list of articles
  *     tags:
  *       - Article
  *     responses:
@@ -57,7 +57,7 @@ router.get("/",  async(req,res)=>{
 
 /**
  * @swagger
- * "/article/{articleId}":
+ * "/articles/{articleId}":
  *   get:
  *     summary: Find article by ID
  *     tags: 
@@ -113,7 +113,7 @@ router.get("/:id", async (req,res) =>{
 *       '400':
 *         description: Bad Request 
 *       '201':
-*         description: Query added.
+*         description: Article added.
 *         content:
 *           application/json:
 *             schema:
@@ -143,27 +143,63 @@ router.post("/",verifyToken, validateMiddleware(validateArticle), async (req,res
    }
 })
 
+/** 
+* @swagger
+* /article:
+*   patch:
+*     summary: Update an existing article
+*     tags:
+*       - Article
+*     requestBody:
+*       required: true
+*       content:
+*         application/json:
+*             schema:
+*               $ref: '#/components/schemas/Article' 
+*     responses:
+*       '400':
+*         description: Bad Request 
+*       '201':
+*         description: article patched.
+*         content:
+*           application/json:
+*             schema:
+*               type: object
+*               properties:
+*                 Message:
+*                   type: string
+*/
 
-// update a post
-const article_update = async (req, res) => {
-	try {
-		const post = await Article.findOne({ _id: req.params.id })
-		if (req.body.title.length > 0 && req.body.content.length > 0) {
-			post.title = req.body.title,
-			post.content = req.body.content
-			await post.save()
-			return res.status(200).json({message:"Article successfully updated!"});
-		}
-		else{
-			return res.status(400).json({message:"Title and content need value!"});
-		}
-	} catch {
-		return res.status(404).json({error: "Article doesn't exist!"})
-	}
-}
+ router.get("/",  async(req,res)=>{
+    try {
+        const articles = await Article.find({});
+        res.status(200).send(articles);
+    } catch (error){
+        res.status(404).send({error:"Problem getting articles"})
+    }
+})
+router.post("/",verifyToken, validateMiddleware(validateArticle), async (req,res) =>{
+    // console.log(req.body)
+    try {
+ 
+     const newArticle =await new Article({
+         heading : req.body.heading,
+         content : req.body.content,
+         userId: req.user["id"],
+         image : req.body.image,
+         })
+        // console.log(req.user["id"])
+      await newArticle.save();
+ 
+      res.status(201).send({Message:"New Article Created"})     
+    } catch (error){
+        res.status(400).send({error:"There was a problem publishing the article"})
+     //    console.log(error)
+    }
+ })
 /**
  * @swagger
- * "/article/{articleId}":
+ * "/articles/{articleId}":
  *   delete:
  *     summary: Delete article according to ID
  *     tags: 
@@ -199,7 +235,6 @@ router.delete("/:id", verifyToken, async (req, res) => {
 		res.status(404).send({ error: "This article doesn't exist!" })
 	}
 })
-
 router.put("/:id",verifyToken, async (req, res) => {
 	try {
         let articleUser = await Article.findOne({_id: req.params.id})
