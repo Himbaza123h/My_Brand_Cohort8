@@ -26,7 +26,7 @@ router.get("/", /*#__PURE__*/function () {
         switch (_context.prev = _context.next) {
           case 0:
             try {
-              res.status(200).send("<h1> Welcome to my blog api </h1>");
+              res.status(200).send("<h1> Welcome to My_Brand_Cohort8 API </h1>");
             } catch (error) {
               res.sendStatus(500).send({
                 error: "Problem with request"

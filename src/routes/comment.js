@@ -5,6 +5,7 @@ const {Article } = require("../models/Article");
 const router = express.Router();
 const validateMiddleWare = require('../middlewares/validateMiddleware')
 
+import swaggerJSDoc from "swagger-jsdoc";
 import { verifyToken } from "../controllers/verifyToken";
 import { User } from "../models/User";
 
@@ -14,7 +15,7 @@ import { User } from "../models/User";
  *   bearerAuth: []
  * /comment:
  *   get:
- *     summary: GET Comments
+ *     summary: GET list of comments
  *     tags:
  *       - Comment
  *     responses:
@@ -159,6 +160,104 @@ router.delete("/:id", verifyToken,validateMiddleWare(validateComment), async (re
 		res.sendStatus(204).send({Message: "Comment Deleted successfully"});
 	} catch {
 		res.status(500).send({ error: "Problem deleting a comment" })
+	}
+})
+
+/**
+ * @swagger
+ * "/comment/{CommentId}":
+ *   get:
+ *     summary: Find Comment by its ID
+ *     tags: 
+ *       - Comment
+ *     parameters:
+ *       - name: commentId
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The Id of the comment
+ *     responses:
+ *       "200":
+ *         description: successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/Comment"
+ *       "404":
+ *         description: Comment not found
+ */
+
+ router.get("/:id", async (req,res) =>{
+    try {
+        const comment = await Comment.findOne({ _id: req.params.id})
+        if (comment) {
+            res.status(200).send(comment)   
+        }else{
+            res.status(404).send({error: "Comment doesn't exist !"})
+        }
+    } catch (err) {
+        res.status(404).send({error: " Comment doesn't exist !"})
+        // console.log(err)
+    }
+
+})
+
+/**
+ * @swagger
+ * "/comment/{commentId}":
+ *   delete:
+ *     summary: Delete comment according to ID
+ *     tags: 
+ *       - Comment
+ *     parameters:
+ *       - name: commentId
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The Id of the comment
+ *     responses:
+ *       "200":
+ *         description: successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/Comment"
+ *       "404":
+ *         description: Comment not found
+ */
+ router.delete("/:id", verifyToken, async (req, res) => {
+	try {
+    let CommentUser = await Comment.findOne({_id: req.params.id})
+        if (req.user["id"] == CommentUser["userId"]) {
+            await Article.deleteOne({ _id: req.params.id })
+            res.status(202).send({Message:"Comment deleted successfully"});      
+        } else {
+            res.status(401).send({Message:"Not Authorized to perform this operation"})
+        }
+	} catch {
+		res.status(404).send({ error: "This Comment doesn't exist!" })
+	}
+})
+
+router.put("/:id",verifyToken, async (req, res) => {
+	try {
+        let commentUser = await Comment.findOne({_id: req.params.id})
+        if (req.user["id"] == commentUser["userId"]) {
+		    const comment = await Comment.findOne({ _id: req.params.id })
+
+            if (req.body.comment) {
+                comment.comment = req.body.comment
+            }
+            await comment.save()
+            res.status(200).send(comment)
+        }else{
+            res.status(401).send({Message:"Not Authorized to perform this operation"})  
+        }
+	} catch(err) {
+		res.status(404).send({ error: "We couldn't find that comment " })
+       // console.log(err);
 	}
 })
 

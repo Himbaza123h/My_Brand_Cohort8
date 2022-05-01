@@ -11,7 +11,7 @@ import { verifyToken } from "../controllers/verifyToken";
 
 router.get("/",  async(req,res)=>{
     try {
-        res.status(200).send("<h1> Welcome to my blog api </h1>");
+        res.status(200).send("<h1> Welcome to My_Brand_Cohort8 API </h1>");
     } catch (error){
         res.sendStatus(500).send({error:"Problem with request"})
     }

@@ -144,6 +144,23 @@ router.post("/",verifyToken, validateMiddleware(validateArticle), async (req,res
 })
 
 
+// update a post
+const article_update = async (req, res) => {
+	try {
+		const post = await Article.findOne({ _id: req.params.id })
+		if (req.body.title.length > 0 && req.body.content.length > 0) {
+			post.title = req.body.title,
+			post.content = req.body.content
+			await post.save()
+			return res.status(200).json({message:"Article successfully updated!"});
+		}
+		else{
+			return res.status(400).json({message:"Title and content need value!"});
+		}
+	} catch {
+		return res.status(404).json({error: "Article doesn't exist!"})
+	}
+}
 /**
  * @swagger
  * "/article/{articleId}":

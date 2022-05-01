@@ -5,12 +5,13 @@ const router = express.Router();
 const validateMiddleware = require("../middlewares/validateMiddleware")
 
 import { verifyToken } from "../controllers/verifyToken";
+import { Article } from "../models/Article";
 
 /**
  * @swagger
  * /query:
  *   get:
- *     summary: GET Queries
+ *     summary: GET a Query
  *     tags:
  *       - Query
  *     responses:
@@ -67,7 +68,6 @@ router.get("/", verifyToken ,async (req,res)=>{
         res.status(404).send({Message: "Problem getting articles"})
     }
 })
-
 /** 
 * @swagger
 * /query:
@@ -111,5 +111,113 @@ router.post("/", validateMiddleware(validateQuery) ,async (req,res) =>{
        res.status(400).send({error:"There was a problem submitting the query"})
    }
 })
+/**
+ * @swagger
+ * "/query/{QueryId}":
+ *   get:
+ *     summary: Find Query by its ID
+ *     tags: 
+ *       - Query
+ *     parameters:
+ *       - name: queryId
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The Id of the query
+ *     responses:
+ *       "200":
+ *         description: successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/Query"
+ *       "404":
+ *         description: Query not found
+ */
 
+ router.get("/:id", async (req,res) =>{
+    try {
+        const query = await Query.findOne({ _id: req.params.id})
+        if (query) {
+            res.status(200).send(query)   
+        }else{
+            res.status(404).send({error: "Query doesn't exist !"})
+        }
+    } catch (err) {
+        res.status(404).send({error: "Query doesn't exist !"})
+        // console.log(err)
+    }
+
+})
+
+
+
+/**
+ * @swagger
+ * "/query/{QueryId}":
+ *   delete:
+ *     summary: Delete a Query according to its ID
+ *     tags: 
+ *       - Query
+ *     parameters:
+ *       - name: QueryId
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The Id of the Query
+ *     responses:
+ *       "200":
+ *         description: successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/Query"
+ *       "404":
+ *         description: Query not found
+ */
+ router.delete("/:id", verifyToken, async (req, res) => {
+	try {
+    let QueryUser = await Query.findOne({_id: req.params.id})
+        if (req.user["id"] == QueryUser["userId"]) {
+            await Query.deleteOne({ _id: req.params.id })
+            res.status(202).send({Message:"Query deleted successfully"});      
+        } else {
+            res.status(401).send({Message:"Not Authorized to perform this operation"})
+        }
+	} catch {
+		res.status(404).send({ error: "This Query doesn't exist!" })
+	}
+})
+
+router.put("/:id",verifyToken, async (req, res) => {
+	try {
+        let QueryUser = await Query.findOne({_id: req.params.id})
+        if (req.user["id"] == QueryUser["userId"]) {
+		    const Query = await Query.findOne({ _id: req.params.id })
+
+            if (req.body.username) {
+                query.username = req.body.username
+            }
+
+            if (req.body.email) {
+                query.email = req.body.email
+            }
+            if (req.body.message) {message
+                query.message = req.body.message
+            }
+            if (req.body.subject) {
+                query.subject = req.body.subject
+            }
+            await query.save()
+            res.status(200).send(query)
+        }else{
+            res.status(401).send({Message:"Not Authorized to perform this operation"})  
+        }
+	} catch(err) {
+		res.status(404).send({ error: "We couldn't find that query " })
+       // console.log(err);
+	}
+})
 module.exports = router;

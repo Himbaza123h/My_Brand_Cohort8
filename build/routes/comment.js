@@ -1,8 +1,12 @@
 "use strict";
 
+var _swaggerJsdoc = _interopRequireDefault(require("swagger-jsdoc"));
+
 var _verifyToken = require("../controllers/verifyToken");
 
 var _User = require("../models/User");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
@@ -27,7 +31,7 @@ var validateMiddleWare = require('../middlewares/validateMiddleware');
  *   bearerAuth: []
  * /comment:
  *   get:
- *     summary: GET Comments
+ *     summary: GET list of comments
  *     tags:
  *       - Comment
  *     responses:
@@ -337,6 +341,232 @@ router["delete"]("/:id", _verifyToken.verifyToken, validateMiddleWare(validateCo
 
   return function (_x11, _x12) {
     return _ref6.apply(this, arguments);
+  };
+}());
+/**
+ * @swagger
+ * "/comment/{CommentId}":
+ *   get:
+ *     summary: Find Comment by its ID
+ *     tags: 
+ *       - Comment
+ *     parameters:
+ *       - name: commentId
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The Id of the comment
+ *     responses:
+ *       "200":
+ *         description: successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/Comment"
+ *       "404":
+ *         description: Comment not found
+ */
+
+router.get("/:id", /*#__PURE__*/function () {
+  var _ref7 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7(req, res) {
+    var comment;
+    return regeneratorRuntime.wrap(function _callee7$(_context7) {
+      while (1) {
+        switch (_context7.prev = _context7.next) {
+          case 0:
+            _context7.prev = 0;
+            _context7.next = 3;
+            return Comment.findOne({
+              _id: req.params.id
+            });
+
+          case 3:
+            comment = _context7.sent;
+
+            if (comment) {
+              res.status(200).send(comment);
+            } else {
+              res.status(404).send({
+                error: "Comment doesn't exist !"
+              });
+            }
+
+            _context7.next = 10;
+            break;
+
+          case 7:
+            _context7.prev = 7;
+            _context7.t0 = _context7["catch"](0);
+            res.status(404).send({
+              error: " Comment doesn't exist !"
+            }); // console.log(err)
+
+          case 10:
+          case "end":
+            return _context7.stop();
+        }
+      }
+    }, _callee7, null, [[0, 7]]);
+  }));
+
+  return function (_x13, _x14) {
+    return _ref7.apply(this, arguments);
+  };
+}());
+/**
+ * @swagger
+ * "/comment/{commentId}":
+ *   delete:
+ *     summary: Delete comment according to ID
+ *     tags: 
+ *       - Comment
+ *     parameters:
+ *       - name: commentId
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The Id of the comment
+ *     responses:
+ *       "200":
+ *         description: successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/Comment"
+ *       "404":
+ *         description: Comment not found
+ */
+
+router["delete"]("/:id", _verifyToken.verifyToken, /*#__PURE__*/function () {
+  var _ref8 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee8(req, res) {
+    var CommentUser;
+    return regeneratorRuntime.wrap(function _callee8$(_context8) {
+      while (1) {
+        switch (_context8.prev = _context8.next) {
+          case 0:
+            _context8.prev = 0;
+            _context8.next = 3;
+            return Comment.findOne({
+              _id: req.params.id
+            });
+
+          case 3:
+            CommentUser = _context8.sent;
+
+            if (!(req.user["id"] == CommentUser["userId"])) {
+              _context8.next = 10;
+              break;
+            }
+
+            _context8.next = 7;
+            return Article.deleteOne({
+              _id: req.params.id
+            });
+
+          case 7:
+            res.status(202).send({
+              Message: "Comment deleted successfully"
+            });
+            _context8.next = 11;
+            break;
+
+          case 10:
+            res.status(401).send({
+              Message: "Not Authorized to perform this operation"
+            });
+
+          case 11:
+            _context8.next = 16;
+            break;
+
+          case 13:
+            _context8.prev = 13;
+            _context8.t0 = _context8["catch"](0);
+            res.status(404).send({
+              error: "This Comment doesn't exist!"
+            });
+
+          case 16:
+          case "end":
+            return _context8.stop();
+        }
+      }
+    }, _callee8, null, [[0, 13]]);
+  }));
+
+  return function (_x15, _x16) {
+    return _ref8.apply(this, arguments);
+  };
+}());
+router.put("/:id", _verifyToken.verifyToken, /*#__PURE__*/function () {
+  var _ref9 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee9(req, res) {
+    var commentUser, comment;
+    return regeneratorRuntime.wrap(function _callee9$(_context9) {
+      while (1) {
+        switch (_context9.prev = _context9.next) {
+          case 0:
+            _context9.prev = 0;
+            _context9.next = 3;
+            return Comment.findOne({
+              _id: req.params.id
+            });
+
+          case 3:
+            commentUser = _context9.sent;
+
+            if (!(req.user["id"] == commentUser["userId"])) {
+              _context9.next = 14;
+              break;
+            }
+
+            _context9.next = 7;
+            return Comment.findOne({
+              _id: req.params.id
+            });
+
+          case 7:
+            comment = _context9.sent;
+
+            if (req.body.comment) {
+              comment.comment = req.body.comment;
+            }
+
+            _context9.next = 11;
+            return comment.save();
+
+          case 11:
+            res.status(200).send(comment);
+            _context9.next = 15;
+            break;
+
+          case 14:
+            res.status(401).send({
+              Message: "Not Authorized to perform this operation"
+            });
+
+          case 15:
+            _context9.next = 20;
+            break;
+
+          case 17:
+            _context9.prev = 17;
+            _context9.t0 = _context9["catch"](0);
+            res.status(404).send({
+              error: "We couldn't find that comment "
+            }); // console.log(err);
+
+          case 20:
+          case "end":
+            return _context9.stop();
+        }
+      }
+    }, _callee9, null, [[0, 17]]);
+  }));
+
+  return function (_x17, _x18) {
+    return _ref9.apply(this, arguments);
   };
 }());
 module.exports = router;
