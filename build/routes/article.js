@@ -24,7 +24,7 @@ var validateMiddleWare = require('../middlewares/validateMiddleware');
  * @swagger
  * security:
  *   bearerAuth: []
- * /article:
+ * /articles:
  *   get:
  *     summary: GET a list of articles
  *     tags:
@@ -96,7 +96,7 @@ router.get("/", /*#__PURE__*/function () {
 }());
 /**
  * @swagger
- * "/article/{articleId}":
+ * "/articles/{articleId}":
  *   get:
  *     summary: Find article by ID
  *     tags: 
@@ -167,17 +167,30 @@ router.get("/:id", /*#__PURE__*/function () {
 }());
 /** 
 * @swagger
-* /article:
+* /articles:
 *   post:
 *     summary: Add New Article
 *     tags:
 *       - Article
-*     requestBody:
-*       required: true
-*       content:
-*         application/json:
-*             schema:
-*               $ref: '#/components/schemas/Article' 
+*     parameters:
+*       - name: Title
+*         in: formData
+*         required: true
+*         schema:
+*           type: string
+*         description: The title of the Article
+*       - name: Image
+*         in: formdata
+*         required: true
+*         schema:
+*           type: file
+*         description: The Image of the Article
+*       - name: content
+*         in: formData
+*         required: true
+*         schema:
+*           type: string
+*         description: The content of the Article
 *     responses:
 *       '400':
 *         description: Bad Request 
@@ -241,17 +254,36 @@ router.post("/", _verifyToken.verifyToken, (0, _validateMiddleware["default"])(v
 }());
 /** 
 * @swagger
-* /article:
+* /articles/{articleId}:
 *   patch:
 *     summary: Update an existing article
 *     tags:
 *       - Article
-*     requestBody:
-*       required: true
-*       content:
-*         application/json:
-*             schema:
-*               $ref: '#/components/schemas/Article' 
+*     parameters:
+*       - name: Article Id
+*         in: formData
+*         required: true
+*         schema:
+*           type: string
+*         description: The Id of the Article
+*       - name: Image
+*         in: formdata
+*         required: true
+*         schema:
+*           type: file
+*         description: The Image of the Article
+*       - name: heading
+*         in: formData
+*         required: true
+*         schema:
+*           type: string
+*         description: The heading of the Article
+*       - name: Content
+*         in: formData
+*         required: true
+*         schema:
+*           type: string
+*         description: The content of the Article
 *     responses:
 *       '400':
 *         description: Bad Request 
@@ -266,92 +298,67 @@ router.post("/", _verifyToken.verifyToken, (0, _validateMiddleware["default"])(v
 *                   type: string
 */
 
-router.get("/", /*#__PURE__*/function () {
+router.patch("/:id", _verifyToken.verifyToken, (0, _validateMiddleware["default"])(validateArticle), /*#__PURE__*/function () {
   var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(req, res) {
-    var articles;
+    var article;
     return regeneratorRuntime.wrap(function _callee4$(_context4) {
       while (1) {
         switch (_context4.prev = _context4.next) {
           case 0:
             _context4.prev = 0;
             _context4.next = 3;
-            return Article.find({});
-
-          case 3:
-            articles = _context4.sent;
-            res.status(200).send(articles);
-            _context4.next = 10;
-            break;
-
-          case 7:
-            _context4.prev = 7;
-            _context4.t0 = _context4["catch"](0);
-            res.status(404).send({
-              error: "Problem getting articles"
+            return Article.findOne({
+              _id: req.params.id
             });
 
-          case 10:
+          case 3:
+            article = _context4.sent;
+
+            if (!(req.body.title.length > 0 && req.body.content.length > 0)) {
+              _context4.next = 11;
+              break;
+            }
+
+            article.title = req.body.title, article.content = req.body.content;
+            _context4.next = 8;
+            return article.save();
+
+          case 8:
+            return _context4.abrupt("return", res.status(200).json({
+              message: "Article successfully updated!"
+            }));
+
+          case 11:
+            return _context4.abrupt("return", res.status(400).json({
+              message: "Title and content need value!"
+            }));
+
+          case 12:
+            _context4.next = 17;
+            break;
+
+          case 14:
+            _context4.prev = 14;
+            _context4.t0 = _context4["catch"](0);
+            return _context4.abrupt("return", res.status(404).json({
+              error: "Article doesn't exist!"
+            }));
+
+          case 17:
           case "end":
             return _context4.stop();
         }
       }
-    }, _callee4, null, [[0, 7]]);
+    }, _callee4, null, [[0, 14]]);
   }));
 
   return function (_x7, _x8) {
     return _ref4.apply(this, arguments);
   };
 }());
-router.post("/", _verifyToken.verifyToken, (0, _validateMiddleware["default"])(validateArticle), /*#__PURE__*/function () {
-  var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(req, res) {
-    var newArticle;
-    return regeneratorRuntime.wrap(function _callee5$(_context5) {
-      while (1) {
-        switch (_context5.prev = _context5.next) {
-          case 0:
-            _context5.prev = 0;
-            _context5.next = 3;
-            return new Article({
-              heading: req.body.heading,
-              content: req.body.content,
-              userId: req.user["id"],
-              image: req.body.image
-            });
-
-          case 3:
-            newArticle = _context5.sent;
-            _context5.next = 6;
-            return newArticle.save();
-
-          case 6:
-            res.status(201).send({
-              Message: "New Article Created"
-            });
-            _context5.next = 12;
-            break;
-
-          case 9:
-            _context5.prev = 9;
-            _context5.t0 = _context5["catch"](0);
-            res.status(400).send({
-              error: "There was a problem publishing the article"
-            }); //    console.log(error)
-
-          case 12:
-          case "end":
-            return _context5.stop();
-        }
-      }
-    }, _callee5, null, [[0, 9]]);
-  }));
-
-  return function (_x9, _x10) {
-    return _ref5.apply(this, arguments);
-  };
-}());
 /**
  * @swagger
- * "/article/{articleId}":
+ * "/articles/{articleId}":
  *   delete:
  *     summary: Delete article according to ID
  *     tags: 
@@ -375,8 +382,69 @@ router.post("/", _verifyToken.verifyToken, (0, _validateMiddleware["default"])(v
  */
 
 router["delete"]("/:id", _verifyToken.verifyToken, /*#__PURE__*/function () {
-  var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(req, res) {
+  var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(req, res) {
     var articleUser;
+    return regeneratorRuntime.wrap(function _callee5$(_context5) {
+      while (1) {
+        switch (_context5.prev = _context5.next) {
+          case 0:
+            _context5.prev = 0;
+            _context5.next = 3;
+            return Article.findOne({
+              _id: req.params.id
+            });
+
+          case 3:
+            articleUser = _context5.sent;
+
+            if (!(req.user["id"] == articleUser["userId"])) {
+              _context5.next = 10;
+              break;
+            }
+
+            _context5.next = 7;
+            return Article.deleteOne({
+              _id: req.params.id
+            });
+
+          case 7:
+            res.status(202).send({
+              Message: "Article deleted successfully"
+            });
+            _context5.next = 11;
+            break;
+
+          case 10:
+            res.status(401).send({
+              Message: "Not Authorized to perform this operation"
+            });
+
+          case 11:
+            _context5.next = 16;
+            break;
+
+          case 13:
+            _context5.prev = 13;
+            _context5.t0 = _context5["catch"](0);
+            res.status(404).send({
+              error: "This article doesn't exist!"
+            });
+
+          case 16:
+          case "end":
+            return _context5.stop();
+        }
+      }
+    }, _callee5, null, [[0, 13]]);
+  }));
+
+  return function (_x9, _x10) {
+    return _ref5.apply(this, arguments);
+  };
+}());
+router.put("/:id", _verifyToken.verifyToken, /*#__PURE__*/function () {
+  var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(req, res) {
+    var articleUser, article;
     return regeneratorRuntime.wrap(function _callee6$(_context6) {
       while (1) {
         switch (_context6.prev = _context6.next) {
@@ -391,78 +459,17 @@ router["delete"]("/:id", _verifyToken.verifyToken, /*#__PURE__*/function () {
             articleUser = _context6.sent;
 
             if (!(req.user["id"] == articleUser["userId"])) {
-              _context6.next = 10;
+              _context6.next = 16;
               break;
             }
 
             _context6.next = 7;
-            return Article.deleteOne({
-              _id: req.params.id
-            });
-
-          case 7:
-            res.status(202).send({
-              Message: "Article deleted successfully"
-            });
-            _context6.next = 11;
-            break;
-
-          case 10:
-            res.status(401).send({
-              Message: "Not Authorized to perform this operation"
-            });
-
-          case 11:
-            _context6.next = 16;
-            break;
-
-          case 13:
-            _context6.prev = 13;
-            _context6.t0 = _context6["catch"](0);
-            res.status(404).send({
-              error: "This article doesn't exist!"
-            });
-
-          case 16:
-          case "end":
-            return _context6.stop();
-        }
-      }
-    }, _callee6, null, [[0, 13]]);
-  }));
-
-  return function (_x11, _x12) {
-    return _ref6.apply(this, arguments);
-  };
-}());
-router.put("/:id", _verifyToken.verifyToken, /*#__PURE__*/function () {
-  var _ref7 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7(req, res) {
-    var articleUser, article;
-    return regeneratorRuntime.wrap(function _callee7$(_context7) {
-      while (1) {
-        switch (_context7.prev = _context7.next) {
-          case 0:
-            _context7.prev = 0;
-            _context7.next = 3;
-            return Article.findOne({
-              _id: req.params.id
-            });
-
-          case 3:
-            articleUser = _context7.sent;
-
-            if (!(req.user["id"] == articleUser["userId"])) {
-              _context7.next = 16;
-              break;
-            }
-
-            _context7.next = 7;
             return Article.findOne({
               _id: req.params.id
             });
 
           case 7:
-            article = _context7.sent;
+            article = _context6.sent;
 
             if (req.body.heading) {
               article.heading = req.body.heading;
@@ -476,12 +483,12 @@ router.put("/:id", _verifyToken.verifyToken, /*#__PURE__*/function () {
               article.image = req.body.image;
             }
 
-            _context7.next = 13;
+            _context6.next = 13;
             return article.save();
 
           case 13:
             res.status(200).send(article);
-            _context7.next = 17;
+            _context6.next = 17;
             break;
 
           case 16:
@@ -490,26 +497,26 @@ router.put("/:id", _verifyToken.verifyToken, /*#__PURE__*/function () {
             });
 
           case 17:
-            _context7.next = 22;
+            _context6.next = 22;
             break;
 
           case 19:
-            _context7.prev = 19;
-            _context7.t0 = _context7["catch"](0);
+            _context6.prev = 19;
+            _context6.t0 = _context6["catch"](0);
             res.status(404).send({
               error: "We couldn't find that article "
             }); // console.log(err);
 
           case 22:
           case "end":
-            return _context7.stop();
+            return _context6.stop();
         }
       }
-    }, _callee7, null, [[0, 19]]);
+    }, _callee6, null, [[0, 19]]);
   }));
 
-  return function (_x13, _x14) {
-    return _ref7.apply(this, arguments);
+  return function (_x11, _x12) {
+    return _ref6.apply(this, arguments);
   };
 }());
 module.exports = router;

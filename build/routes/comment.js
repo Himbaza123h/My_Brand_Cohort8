@@ -29,7 +29,7 @@ var validateMiddleWare = require('../middlewares/validateMiddleware');
  * @swagger
  * security:
  *   bearerAuth: []
- * /comment:
+ * /comments:
  *   get:
  *     summary: GET list of comments
  *     tags:
@@ -223,7 +223,7 @@ router.get("/user/:id", /*#__PURE__*/function () {
 }());
 /** 
 * @swagger
-* /comment:
+* /comments:
 *   post:
 *     summary: Add New Comment
 *     tags:
@@ -345,7 +345,7 @@ router["delete"]("/:id", _verifyToken.verifyToken, validateMiddleWare(validateCo
 }());
 /**
  * @swagger
- * "/comment/{CommentId}":
+ * "/comments/{CommentId}":
  *   get:
  *     summary: Find Comment by its ID
  *     tags: 
@@ -416,7 +416,7 @@ router.get("/:id", /*#__PURE__*/function () {
 }());
 /**
  * @swagger
- * "/Comments/{commentId}":
+ * "/comments/{commentId}":
  *   delete:
  *     summary: Delete comment according to ID
  *     tags: 

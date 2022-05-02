@@ -10,7 +10,7 @@ import validateMiddleware from "../middlewares/validateMiddleware";
  * @swagger
  * security:
  *   bearerAuth: []
- * /article:
+ * /articles:
  *   get:
  *     summary: GET a list of articles
  *     tags:
@@ -98,17 +98,30 @@ router.get("/:id", async (req,res) =>{
 
 /** 
 * @swagger
-* /article:
+* /articles:
 *   post:
 *     summary: Add New Article
 *     tags:
 *       - Article
-*     requestBody:
-*       required: true
-*       content:
-*         application/json:
-*             schema:
-*               $ref: '#/components/schemas/Article' 
+*     parameters:
+*       - name: Title
+*         in: formData
+*         required: true
+*         schema:
+*           type: string
+*         description: The title of the Article
+*       - name: Image
+*         in: formdata
+*         required: true
+*         schema:
+*           type: file
+*         description: The Image of the Article
+*       - name: content
+*         in: formData
+*         required: true
+*         schema:
+*           type: string
+*         description: The content of the Article
 *     responses:
 *       '400':
 *         description: Bad Request 
@@ -145,17 +158,36 @@ router.post("/",verifyToken, validateMiddleware(validateArticle), async (req,res
 
 /** 
 * @swagger
-* /article:
+* /articles/{articleId}:
 *   patch:
 *     summary: Update an existing article
 *     tags:
 *       - Article
-*     requestBody:
-*       required: true
-*       content:
-*         application/json:
-*             schema:
-*               $ref: '#/components/schemas/Article' 
+*     parameters:
+*       - name: Article Id
+*         in: formData
+*         required: true
+*         schema:
+*           type: string
+*         description: The Id of the Article
+*       - name: Image
+*         in: formdata
+*         required: true
+*         schema:
+*           type: file
+*         description: The Image of the Article
+*       - name: heading
+*         in: formData
+*         required: true
+*         schema:
+*           type: string
+*         description: The heading of the Article
+*       - name: Content
+*         in: formData
+*         required: true
+*         schema:
+*           type: string
+*         description: The content of the Article
 *     responses:
 *       '400':
 *         description: Bad Request 
@@ -169,34 +201,22 @@ router.post("/",verifyToken, validateMiddleware(validateArticle), async (req,res
 *                 Message:
 *                   type: string
 */
-
- router.get("/",  async(req,res)=>{
-    try {
-        const articles = await Article.find({});
-        res.status(200).send(articles);
-    } catch (error){
-        res.status(404).send({error:"Problem getting articles"})
-    }
+router.patch("/:id",verifyToken, validateMiddleware(validateArticle), async (req,res) => {
+	try {
+		const article = await Article.findOne({ _id: req.params.id })
+		if (req.body.title.length > 0 && req.body.content.length > 0) {
+			article.title = req.body.title,
+			article.content = req.body.content
+			await article.save()
+			return res.status(200).json({message:"Article successfully updated!"});
+		}
+		else{
+			return res.status(400).json({message:"Title and content need value!"});
+		}
+	} catch {
+		return res.status(404).json({error: "Article doesn't exist!"})
+	}
 })
-router.post("/",verifyToken, validateMiddleware(validateArticle), async (req,res) =>{
-    // console.log(req.body)
-    try {
- 
-     const newArticle =await new Article({
-         heading : req.body.heading,
-         content : req.body.content,
-         userId: req.user["id"],
-         image : req.body.image,
-         })
-        // console.log(req.user["id"])
-      await newArticle.save();
- 
-      res.status(201).send({Message:"New Article Created"})     
-    } catch (error){
-        res.status(400).send({error:"There was a problem publishing the article"})
-     //    console.log(error)
-    }
- })
 /**
  * @swagger
  * "/articles/{articleId}":

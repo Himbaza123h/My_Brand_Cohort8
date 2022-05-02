@@ -20,9 +20,9 @@ var validateMiddleware = require("../middlewares/validateMiddleware");
 
 /**
  * @swagger
- * /query:
+ * /queries:
  *   get:
- *     summary: GET a Query
+ *     summary: GET a list of queries
  *     tags:
  *       - Query
  *     responses:
@@ -108,7 +108,7 @@ router.get("/", _verifyToken.verifyToken, /*#__PURE__*/function () {
 }());
 /** 
 * @swagger
-* /query:
+* /queries:
 *   post:
 *     summary: Add New Query
 *     tags:
@@ -179,7 +179,7 @@ router.post("/", validateMiddleware(validateQuery), /*#__PURE__*/function () {
 }());
 /**
  * @swagger
- * "/query/{QueryId}":
+ * "/queries/{id}":
  *   get:
  *     summary: Find Query by its ID
  *     tags: 
@@ -251,7 +251,7 @@ router.get("/:id", /*#__PURE__*/function () {
 }());
 /**
  * @swagger
- * "/query/{QueryId}":
+ * "/queries/{id}":
  *   delete:
  *     summary: Delete a Query according to its ID
  *     tags: 

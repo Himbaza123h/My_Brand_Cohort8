@@ -13,7 +13,7 @@ import { verifyToken } from "../controllers/verifyToken";
  * @swagger
  * security:
  *   bearerAuth: []
- * /like:
+ * /likes:
  *   get:
  *     summary: GET Likes
  *     tags:
@@ -53,7 +53,7 @@ router.get("/",  async(req,res)=>{
 
 /**
  * @swagger
- * "/like/article/{articleId}":
+ * "/articles/{id}/likes":
  *   get:
  *     summary: Find likes for one article
  *     tags: 
@@ -72,7 +72,7 @@ router.get("/",  async(req,res)=>{
  *         description:  Not found
   */
 
-router.get("/article/:id", async (req,res) =>{
+router.get("/articles/:id", async (req,res) =>{
     try {
         const likes = await Like.find({articleId:req.params.id})
 
@@ -123,7 +123,7 @@ router.get("/:id", async (req,res) =>{
 })
 /** 
 * @swagger
-* /like:
+* /likes:
 *   post:
 *     summary: Add New Like
 *     tags:
@@ -185,7 +185,7 @@ router.post("/",verifyToken,validateMiddleWare(validateLike) , async (req,res) =
 
 /**
  * @swagger
- * "/like/Dislike":
+ * "/likes/{articleId}/Dislike":
  *   delete:
  *     summary: Dislike an article
  *     tags: 

@@ -31,7 +31,7 @@ var validateMiddleWare = require('../middlewares/validateMiddleware');
  * @swagger
  * security:
  *   bearerAuth: []
- * /like:
+ * /likes:
  *   get:
  *     summary: GET Likes
  *     tags:
@@ -95,7 +95,7 @@ router.get("/", /*#__PURE__*/function () {
 }());
 /**
  * @swagger
- * "/like/article/{articleId}":
+ * "/articles/{id}/likes":
  *   get:
  *     summary: Find likes for one article
  *     tags: 
@@ -114,7 +114,7 @@ router.get("/", /*#__PURE__*/function () {
  *         description:  Not found
   */
 
-router.get("/article/:id", /*#__PURE__*/function () {
+router.get("/articles/:id", /*#__PURE__*/function () {
   var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(req, res) {
     var likes;
     return regeneratorRuntime.wrap(function _callee2$(_context2) {
@@ -280,7 +280,7 @@ router.get("/:id", /*#__PURE__*/function () {
 }());
 /** 
 * @swagger
-* /like:
+* /likes:
 *   post:
 *     summary: Add New Like
 *     tags:
@@ -400,7 +400,7 @@ router.post("/", _verifyToken.verifyToken, validateMiddleWare(validateLike), /*#
 }());
 /**
  * @swagger
- * "/like/Dislike":
+ * "/likes/{articleId}/Dislike":
  *   delete:
  *     summary: Dislike an article
  *     tags: 

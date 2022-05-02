@@ -13,7 +13,7 @@ import { User } from "../models/User";
  * @swagger
  * security:
  *   bearerAuth: []
- * /comment:
+ * /comments:
  *   get:
  *     summary: GET list of comments
  *     tags:
@@ -97,7 +97,7 @@ router.get("/user/:id", async (req,res) =>{
 
 /** 
 * @swagger
-* /comment:
+* /comments:
 *   post:
 *     summary: Add New Comment
 *     tags:
