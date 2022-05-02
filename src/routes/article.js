@@ -98,35 +98,22 @@ router.get("/:id", async (req,res) =>{
 
 /** 
 * @swagger
-* /articles:
+* /article:
 *   post:
 *     summary: Add New Article
 *     tags:
 *       - Article
-*     parameters:
-*       - name: Title
-*         in: formData
-*         required: true
-*         schema:
-*           type: string
-*         description: The title of the Article
-*       - name: Image
-*         in: formdata
-*         required: true
-*         schema:
-*           type: file
-*         description: The Image of the Article
-*       - name: content
-*         in: formData
-*         required: true
-*         schema:
-*           type: string
-*         description: The content of the Article
+*     requestBody:
+*       required: true
+*       content:
+*         application/json:
+*             schema:
+*               $ref: '#/components/schemas/Article' 
 *     responses:
 *       '400':
 *         description: Bad Request 
 *       '201':
-*         description: Article added.
+*         description: Query added.
 *         content:
 *           application/json:
 *             schema:
@@ -135,7 +122,6 @@ router.get("/:id", async (req,res) =>{
 *                 Message:
 *                   type: string
 */
-
 router.post("/",verifyToken, validateMiddleware(validateArticle), async (req,res) =>{
    // console.log(req.body)
    try {
