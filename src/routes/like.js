@@ -15,7 +15,7 @@ import { verifyToken } from "../controllers/verifyToken";
  *   bearerAuth: []
  * /likes:
  *   get:
- *     summary: GET Likes
+ *     summary: GET all Likes
  *     tags:
  *       - Like
  *     responses:
@@ -53,9 +53,9 @@ router.get("/",  async(req,res)=>{
 
 /**
  * @swagger
- * "/articles/{id}/likes":
+ * "/articles/{articleId}/likes":
  *   get:
- *     summary: Find likes for one article
+ *     summary: Find all likes for single article
  *     tags: 
  *       - Like
  *     parameters:
@@ -84,7 +84,7 @@ router.get("/articles/:id", async (req,res) =>{
 
 })
 
-router.get("/:id", async (req,res) =>{
+router.get("/articles/:id", async (req,res) =>{
     try {
         const like = await Like.find({_id:req.params.id})
     
@@ -98,7 +98,7 @@ router.get("/:id", async (req,res) =>{
 
 
 
-router.get("/dislike/:id", async (req,res) =>{
+router.get("articles/dislike/:id", async (req,res) =>{
     try {
         const dislikes = await Dislike.find({articleId:req.params.id})
     
@@ -110,7 +110,7 @@ router.get("/dislike/:id", async (req,res) =>{
 
 })
 
-router.get("/:id", async (req,res) =>{
+router.get("articles/:id", async (req,res) =>{
     try {
         const like = await Like.find({_id:req.params.id})
     
@@ -123,7 +123,7 @@ router.get("/:id", async (req,res) =>{
 })
 /** 
 * @swagger
-* /likes:
+* /articles/articleId/like:
 *   post:
 *     summary: Add New Like
 *     tags:
@@ -153,7 +153,7 @@ router.get("/:id", async (req,res) =>{
 *                   type: string
 */
 
-router.post("/",verifyToken,validateMiddleWare(validateLike) , async (req,res) =>{
+router.post("articles/:id/",verifyToken,validateMiddleWare(validateLike) , async (req,res) =>{
    try {
    let likeExists = await Like.findOne({articleId:req.body.articleId, userId: req.user["id"]});
    let dislikeExists = await Dislike.findOne({articleId:req.body.articleId, userId: req.user["id"]});
@@ -185,7 +185,7 @@ router.post("/",verifyToken,validateMiddleWare(validateLike) , async (req,res) =
 
 /**
  * @swagger
- * "/likes/{articleId}/Dislike":
+ * "/articles/{articleId}/Dislike":
  *   delete:
  *     summary: Dislike an article
  *     tags: 
@@ -211,7 +211,7 @@ router.post("/",verifyToken,validateMiddleWare(validateLike) , async (req,res) =
 *                   type: string
  */
 
-router.delete("/:id", verifyToken,validateMiddleWare(validateLike), async (req, res) => {
+router.delete("articles/:id", verifyToken,validateMiddleWare(validateLike), async (req, res) => {
 	try {
         //check if a user has previously liked the article
         let likeExists = Like.findOne({articleId:req.body.articleId, userId: req.user["id"]});

@@ -13,7 +13,7 @@ import { User } from "../models/User";
  * @swagger
  * security:
  *   bearerAuth: []
- * /comments:
+ * /articles/comments:
  *   get:
  *     summary: GET list of comments
  *     tags:
@@ -43,7 +43,7 @@ import { User } from "../models/User";
  *                     description: comment contents
  */
 
-router.get("/",  async(req,res)=>{
+router.get("articles/",  async(req,res)=>{
     try {
         const comments = await Comment.find({});
         res.status(200).send(comments);
@@ -66,7 +66,7 @@ router.get("/:id", async (req,res) =>{
     }
 })
 
-router.get("/article/:id", async (req,res) =>{
+router.get("/articles/:id", async (req,res) =>{
     try {
         const comments = await Comment.find({articleId:req.params.id})
         if (comments) {
@@ -97,7 +97,7 @@ router.get("/user/:id", async (req,res) =>{
 
 /** 
 * @swagger
-* /comments:
+* /articles/{articleId}/comment:
 *   post:
 *     summary: Add New Comment
 *     tags:
@@ -135,7 +135,7 @@ router.get("/user/:id", async (req,res) =>{
 *           example: I appreciate to be with you in this team
 */
 
-router.post("/",verifyToken,validateMiddleWare(validateComment) , async (req,res) =>{
+router.post("/articles/:id",verifyToken,validateMiddleWare(validateComment) , async (req,res) =>{
    try {
 
     const newComment = new Comment({
@@ -165,9 +165,9 @@ router.delete("/:id", verifyToken,validateMiddleWare(validateComment), async (re
 
 /**
  * @swagger
- * "/comments/{CommentId}":
+ * "articles/{articleId}/comments":
  *   get:
- *     summary: Find Comment by its ID
+ *     summary: get list of comments for single Article
  *     tags: 
  *       - Comment
  *     parameters:
@@ -188,7 +188,7 @@ router.delete("/:id", verifyToken,validateMiddleWare(validateComment), async (re
  *         description: Comment not found
  */
 
- router.get("/:id", async (req,res) =>{
+ router.get("articles/:id", async (req,res) =>{
     try {
         const comment = await Comment.findOne({ _id: req.params.id})
         if (comment) {
@@ -205,7 +205,7 @@ router.delete("/:id", verifyToken,validateMiddleWare(validateComment), async (re
 
 /**
  * @swagger
- * "/comments/{commentId}":
+ * "articles/{articleId}/comments/{commentId}":
  *   delete:
  *     summary: Delete comment according to ID
  *     tags: 
@@ -227,7 +227,7 @@ router.delete("/:id", verifyToken,validateMiddleWare(validateComment), async (re
  *       "404":
  *         description: Comment not found
  */
- router.delete("/:id", verifyToken, async (req, res) => {
+ router.delete("articles/:id/comments/:id", verifyToken, async (req, res) => {
 	try {
     let CommentUser = await Comment.findOne({_id: req.params.id})
         if (req.user["id"] == CommentUser["userId"]) {

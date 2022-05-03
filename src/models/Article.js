@@ -19,7 +19,7 @@ const validateArticle = (article) => {
 const schema = Joi.object({
       heading:Joi.string().min(20).max(200).required(),
       content:Joi.string().min(30).max(1000).required(),
-      image: Joi.string(),
+      image: Joi.file(),
   })
 
   return schema.validate(article)

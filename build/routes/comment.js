@@ -29,7 +29,7 @@ var validateMiddleWare = require('../middlewares/validateMiddleware');
  * @swagger
  * security:
  *   bearerAuth: []
- * /comments:
+ * /articles/comments:
  *   get:
  *     summary: GET list of comments
  *     tags:
@@ -58,7 +58,7 @@ var validateMiddleWare = require('../middlewares/validateMiddleware');
  *                     type: string
  *                     description: comment contents
  */
-router.get("/", /*#__PURE__*/function () {
+router.get("articles/", /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(req, res) {
     var comments;
     return regeneratorRuntime.wrap(function _callee$(_context) {
@@ -132,7 +132,7 @@ router.get("/:id", /*#__PURE__*/function () {
     return _ref2.apply(this, arguments);
   };
 }());
-router.get("/article/:id", /*#__PURE__*/function () {
+router.get("/articles/:id", /*#__PURE__*/function () {
   var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(req, res) {
     var comments;
     return regeneratorRuntime.wrap(function _callee3$(_context3) {
@@ -223,7 +223,7 @@ router.get("/user/:id", /*#__PURE__*/function () {
 }());
 /** 
 * @swagger
-* /comments:
+* /articles/{articleId}/comment:
 *   post:
 *     summary: Add New Comment
 *     tags:
@@ -261,7 +261,7 @@ router.get("/user/:id", /*#__PURE__*/function () {
 *           example: I appreciate to be with you in this team
 */
 
-router.post("/", _verifyToken.verifyToken, validateMiddleWare(validateComment), /*#__PURE__*/function () {
+router.post("/articles/:id", _verifyToken.verifyToken, validateMiddleWare(validateComment), /*#__PURE__*/function () {
   var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(req, res) {
     var newComment;
     return regeneratorRuntime.wrap(function _callee5$(_context5) {
@@ -345,9 +345,9 @@ router["delete"]("/:id", _verifyToken.verifyToken, validateMiddleWare(validateCo
 }());
 /**
  * @swagger
- * "/comments/{CommentId}":
+ * "articles/{articleId}/comments":
  *   get:
- *     summary: Find Comment by its ID
+ *     summary: get list of comments for single Article
  *     tags: 
  *       - Comment
  *     parameters:
@@ -368,7 +368,7 @@ router["delete"]("/:id", _verifyToken.verifyToken, validateMiddleWare(validateCo
  *         description: Comment not found
  */
 
-router.get("/:id", /*#__PURE__*/function () {
+router.get("articles/:id", /*#__PURE__*/function () {
   var _ref7 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7(req, res) {
     var comment;
     return regeneratorRuntime.wrap(function _callee7$(_context7) {
@@ -416,7 +416,7 @@ router.get("/:id", /*#__PURE__*/function () {
 }());
 /**
  * @swagger
- * "/comments/{commentId}":
+ * "articles/{articleId}/comments/{commentId}":
  *   delete:
  *     summary: Delete comment according to ID
  *     tags: 
@@ -439,7 +439,7 @@ router.get("/:id", /*#__PURE__*/function () {
  *         description: Comment not found
  */
 
-router["delete"]("/:id", _verifyToken.verifyToken, /*#__PURE__*/function () {
+router["delete"]("articles/:id/comments/:id", _verifyToken.verifyToken, /*#__PURE__*/function () {
   var _ref8 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee8(req, res) {
     var CommentUser;
     return regeneratorRuntime.wrap(function _callee8$(_context8) {

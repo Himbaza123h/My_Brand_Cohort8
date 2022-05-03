@@ -33,7 +33,7 @@ var validateMiddleWare = require('../middlewares/validateMiddleware');
  *   bearerAuth: []
  * /likes:
  *   get:
- *     summary: GET Likes
+ *     summary: GET all Likes
  *     tags:
  *       - Like
  *     responses:
@@ -95,9 +95,9 @@ router.get("/", /*#__PURE__*/function () {
 }());
 /**
  * @swagger
- * "/articles/{id}/likes":
+ * "/articles/{articleId}/likes":
  *   get:
- *     summary: Find likes for one article
+ *     summary: Find all likes for single article
  *     tags: 
  *       - Like
  *     parameters:
@@ -155,7 +155,7 @@ router.get("/articles/:id", /*#__PURE__*/function () {
     return _ref2.apply(this, arguments);
   };
 }());
-router.get("/:id", /*#__PURE__*/function () {
+router.get("/articles/:id", /*#__PURE__*/function () {
   var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(req, res) {
     var like;
     return regeneratorRuntime.wrap(function _callee3$(_context3) {
@@ -196,7 +196,7 @@ router.get("/:id", /*#__PURE__*/function () {
     return _ref3.apply(this, arguments);
   };
 }());
-router.get("/dislike/:id", /*#__PURE__*/function () {
+router.get("articles/dislike/:id", /*#__PURE__*/function () {
   var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(req, res) {
     var dislikes;
     return regeneratorRuntime.wrap(function _callee4$(_context4) {
@@ -237,7 +237,7 @@ router.get("/dislike/:id", /*#__PURE__*/function () {
     return _ref4.apply(this, arguments);
   };
 }());
-router.get("/:id", /*#__PURE__*/function () {
+router.get("articles/:id", /*#__PURE__*/function () {
   var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(req, res) {
     var like;
     return regeneratorRuntime.wrap(function _callee5$(_context5) {
@@ -280,7 +280,7 @@ router.get("/:id", /*#__PURE__*/function () {
 }());
 /** 
 * @swagger
-* /likes:
+* /articles/articleId/like:
 *   post:
 *     summary: Add New Like
 *     tags:
@@ -310,7 +310,7 @@ router.get("/:id", /*#__PURE__*/function () {
 *                   type: string
 */
 
-router.post("/", _verifyToken.verifyToken, validateMiddleWare(validateLike), /*#__PURE__*/function () {
+router.post("articles/:id/", _verifyToken.verifyToken, validateMiddleWare(validateLike), /*#__PURE__*/function () {
   var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(req, res) {
     var likeExists, dislikeExists, newLike;
     return regeneratorRuntime.wrap(function _callee6$(_context6) {
@@ -400,7 +400,7 @@ router.post("/", _verifyToken.verifyToken, validateMiddleWare(validateLike), /*#
 }());
 /**
  * @swagger
- * "/likes/{articleId}/Dislike":
+ * "/articles/{articleId}/Dislike":
  *   delete:
  *     summary: Dislike an article
  *     tags: 
@@ -426,7 +426,7 @@ router.post("/", _verifyToken.verifyToken, validateMiddleWare(validateLike), /*#
 *                   type: string
  */
 
-router["delete"]("/:id", _verifyToken.verifyToken, validateMiddleWare(validateLike), /*#__PURE__*/function () {
+router["delete"]("articles/:id", _verifyToken.verifyToken, validateMiddleWare(validateLike), /*#__PURE__*/function () {
   var _ref7 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7(req, res) {
     var likeExists, dislikeExists, newDislike;
     return regeneratorRuntime.wrap(function _callee7$(_context7) {

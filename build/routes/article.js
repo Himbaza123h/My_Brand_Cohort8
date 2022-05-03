@@ -167,7 +167,7 @@ router.get("/:id", /*#__PURE__*/function () {
 }());
 /** 
 * @swagger
-* /article:
+* /articles:
 *   post:
 *     summary: Add New Article
 *     tags:

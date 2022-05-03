@@ -70,7 +70,7 @@ router.get("/", verifyToken ,async (req,res)=>{
 })
 /** 
 * @swagger
-* /queries:
+* /query:
 *   post:
 *     summary: Add New Query
 *     tags:

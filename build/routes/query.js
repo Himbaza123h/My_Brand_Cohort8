@@ -108,7 +108,7 @@ router.get("/", _verifyToken.verifyToken, /*#__PURE__*/function () {
 }());
 /** 
 * @swagger
-* /queries:
+* /query:
 *   post:
 *     summary: Add New Query
 *     tags:

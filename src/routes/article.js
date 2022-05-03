@@ -98,7 +98,7 @@ router.get("/:id", async (req,res) =>{
 
 /** 
 * @swagger
-* /article:
+* /articles:
 *   post:
 *     summary: Add New Article
 *     tags:
