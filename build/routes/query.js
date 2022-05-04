@@ -20,7 +20,7 @@ var validateMiddleware = require("../middlewares/validateMiddleware");
 
 /**
  * @swagger
- * /queries:
+ * /queries/:
  *   get:
  *     summary: GET a list of queries
  *     tags:
@@ -56,7 +56,7 @@ var validateMiddleware = require("../middlewares/validateMiddleware");
  *           type: string
  *           description: The user's name.
  *           example: Gafuku Ramos
- *         mail:
+ *         email:
  *           type: string
  *           description: The user's email.
  *           example: gafuku@gmail.com
@@ -108,7 +108,7 @@ router.get("/", _verifyToken.verifyToken, /*#__PURE__*/function () {
 }());
 /** 
 * @swagger
-* /query:
+* /queries/:
 *   post:
 *     summary: Add New Query
 *     tags:
@@ -179,7 +179,7 @@ router.post("/", validateMiddleware(validateQuery), /*#__PURE__*/function () {
 }());
 /**
  * @swagger
- * "/queries/{id}":
+ * "/queries/:id":
  *   get:
  *     summary: Find Query by its ID
  *     tags: 
@@ -251,7 +251,7 @@ router.get("/:id", /*#__PURE__*/function () {
 }());
 /**
  * @swagger
- * "/queries/{id}":
+ * "/queries/:id":
  *   delete:
  *     summary: Delete a Query according to its ID
  *     tags: 

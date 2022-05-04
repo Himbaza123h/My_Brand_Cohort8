@@ -34,7 +34,7 @@ var validateArticle = function validateArticle(article) {
   var schema = Joi.object({
     heading: Joi.string().min(20).max(200).required(),
     content: Joi.string().min(30).max(1000).required(),
-    image: Joi.file()
+    image: Joi.string()
   });
   return schema.validate(article);
 };

@@ -96,7 +96,7 @@ router.get("/", /*#__PURE__*/function () {
 }());
 /**
  * @swagger
- * "/articles/{articleId}":
+ * "/articles/:id":
  *   get:
  *     summary: Find article by ID
  *     tags: 
@@ -167,7 +167,7 @@ router.get("/:id", /*#__PURE__*/function () {
 }());
 /** 
 * @swagger
-* /articles:
+* /articles/:
 *   post:
 *     summary: Add New Article
 *     tags:
@@ -241,48 +241,48 @@ router.post("/", _verifyToken.verifyToken, (0, _validateMiddleware["default"])(v
 }());
 /** 
 * @swagger
-* /articles/{articleId}:
-*   patch:
-*     summary: Update an existing article
-*     tags:
-*       - Article
-*     parameters:
-*       - name: Article Id
-*         in: formData
-*         required: true
-*         schema:
-*           type: string
-*         description: The Id of the Article
-*       - name: Image
-*         in: formdata
-*         required: true
-*         schema:
-*           type: file
-*         description: The Image of the Article
-*       - name: heading
-*         in: formData
-*         required: true
-*         schema:
-*           type: string
-*         description: The heading of the Article
-*       - name: Content
-*         in: formData
-*         required: true
-*         schema:
-*           type: string
-*         description: The content of the Article
-*     responses:
-*       '400':
-*         description: Bad Request 
-*       '201':
-*         description: article patched.
-*         content:
-*           application/json:
-*             schema:
-*               type: object
-*               properties:
-*                 Message:
-*                   type: string
+* "/articles/:id":
+*    patch:
+*      summary: Update an existing article
+*      tags:
+*        - Article
+*      parameters:
+*        - name: Article Id
+*          in: formData
+*          required: true
+*          schema:
+*            type: string
+*          description: The Id of the Article
+*        - name: Image
+*          in: formdata
+*          required: true
+*          schema:
+*            type: file
+*          description: The Image of the Article
+*        - name: heading
+*          in: formData
+*          required: true
+*          schema:
+*            type: string
+*          description: The heading of the Article
+*        - name: Content
+*          in: formData
+*          required: true
+*          schema:
+*            type: string
+*          description: The content of the Article
+*      responses:
+*        '400':
+*          description: Bad Request 
+*        '201':
+*          description: article patched.
+*          content:
+*            application/json:
+*              schema:
+*                type: object
+*                properties:
+*                  Message:
+*                    type: string
 */
 
 router.patch("/:id", _verifyToken.verifyToken, (0, _validateMiddleware["default"])(validateArticle), /*#__PURE__*/function () {
@@ -346,29 +346,29 @@ router.patch("/:id", _verifyToken.verifyToken, (0, _validateMiddleware["default"
 /**
  * @swagger
  * "/articles/{articleId}":
- *   delete:
- *     summary: Delete article according to ID
- *     tags: 
- *       - Article
- *     parameters:
- *       - name: articleId
- *         in: path
- *         required: true
- *         schema:
- *           type: string
- *         description: The Id of the article
- *     responses:
- *       "200":
- *         description: successful operation
- *         content:
- *           application/json:
- *             schema:
- *               $ref: "#/components/schemas/Article"
- *       "404":
- *         description: Article not found
+ *    delete:
+ *      summary: Delete article according to ID
+ *      tags: 
+ *        - Article
+ *      parameters:
+ *        - name: articleId
+ *          in: path
+ *          required: true
+ *          schema:
+ *            type: string
+ *          description: The Id of the article
+ *      responses:
+ *        "200":
+ *          description: successful operation
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: "#/components/schemas/Article"
+ *        "404":
+ *          description: Article not found
  */
 
-router["delete"]("/:id", _verifyToken.verifyToken, /*#__PURE__*/function () {
+router["delete"]("/articleId", _verifyToken.verifyToken, /*#__PURE__*/function () {
   var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(req, res) {
     var articleUser;
     return regeneratorRuntime.wrap(function _callee5$(_context5) {

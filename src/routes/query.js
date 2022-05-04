@@ -9,7 +9,7 @@ import { Article } from "../models/Article";
 
 /**
  * @swagger
- * /queries:
+ * /queries/:
  *   get:
  *     summary: GET a list of queries
  *     tags:
@@ -45,7 +45,7 @@ import { Article } from "../models/Article";
  *           type: string
  *           description: The user's name.
  *           example: Gafuku Ramos
- *         mail:
+ *         email:
  *           type: string
  *           description: The user's email.
  *           example: gafuku@gmail.com
@@ -70,7 +70,7 @@ router.get("/", verifyToken ,async (req,res)=>{
 })
 /** 
 * @swagger
-* /query:
+* /queries/:
 *   post:
 *     summary: Add New Query
 *     tags:
@@ -113,7 +113,7 @@ router.post("/", validateMiddleware(validateQuery) ,async (req,res) =>{
 })
 /**
  * @swagger
- * "/queries/{id}":
+ * "/queries/:id":
  *   get:
  *     summary: Find Query by its ID
  *     tags: 
@@ -155,7 +155,7 @@ router.post("/", validateMiddleware(validateQuery) ,async (req,res) =>{
 
 /**
  * @swagger
- * "/queries/{id}":
+ * "/queries/:id":
  *   delete:
  *     summary: Delete a Query according to its ID
  *     tags: 

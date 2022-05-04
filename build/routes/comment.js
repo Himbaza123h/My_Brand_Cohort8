@@ -223,7 +223,7 @@ router.get("/user/:id", /*#__PURE__*/function () {
 }());
 /** 
 * @swagger
-* /articles/{articleId}/comment:
+* /articles/{articleId}/comments:
 *   post:
 *     summary: Add New Comment
 *     tags:
@@ -237,8 +237,8 @@ router.get("/user/:id", /*#__PURE__*/function () {
 *     responses:
 *       '400':
 *         description: Bad Request 
-*       '201':
-*         description: Comment added.
+*       '201':                            
+*         description: Comment added.                
 *         content:
 *           application/json:
 *             schema:
@@ -261,7 +261,7 @@ router.get("/user/:id", /*#__PURE__*/function () {
 *           example: I appreciate to be with you in this team
 */
 
-router.post("/articles/:id", _verifyToken.verifyToken, validateMiddleWare(validateComment), /*#__PURE__*/function () {
+router.post("/{articleId}/comments", _verifyToken.verifyToken, validateMiddleWare(validateComment), /*#__PURE__*/function () {
   var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(req, res) {
     var newComment;
     return regeneratorRuntime.wrap(function _callee5$(_context5) {
@@ -368,9 +368,9 @@ router["delete"]("/:id", _verifyToken.verifyToken, validateMiddleWare(validateCo
  *         description: Comment not found
  */
 
-router.get("articles/:id", /*#__PURE__*/function () {
+router.get("articles/:id/comments", /*#__PURE__*/function () {
   var _ref7 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7(req, res) {
-    var comment;
+    var comments;
     return regeneratorRuntime.wrap(function _callee7$(_context7) {
       while (1) {
         switch (_context7.prev = _context7.next) {
@@ -378,14 +378,14 @@ router.get("articles/:id", /*#__PURE__*/function () {
             _context7.prev = 0;
             _context7.next = 3;
             return Comment.findOne({
-              _id: req.params.id
+              articleId: req.params.id
             });
 
           case 3:
-            comment = _context7.sent;
+            comments = _context7.sent;
 
-            if (comment) {
-              res.status(200).send(comment);
+            if (comments) {
+              res.status(200).send(comments);
             } else {
               res.status(404).send({
                 error: "Comment doesn't exist !"
@@ -416,7 +416,7 @@ router.get("articles/:id", /*#__PURE__*/function () {
 }());
 /**
  * @swagger
- * "articles/{articleId}/comments/{commentId}":
+ * "articles/{articleId}/comments/:id":
  *   delete:
  *     summary: Delete comment according to ID
  *     tags: 
@@ -439,7 +439,7 @@ router.get("articles/:id", /*#__PURE__*/function () {
  *         description: Comment not found
  */
 
-router["delete"]("articles/:id/comments/:id", _verifyToken.verifyToken, /*#__PURE__*/function () {
+router["delete"]("/{articleId}/comments/:id", _verifyToken.verifyToken, /*#__PURE__*/function () {
   var _ref8 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee8(req, res) {
     var CommentUser;
     return regeneratorRuntime.wrap(function _callee8$(_context8) {
