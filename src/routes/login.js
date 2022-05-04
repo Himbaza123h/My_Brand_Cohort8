@@ -60,7 +60,7 @@ router.post("/",async(req,res)=>{
      
      const payload = {id:user._id,username:user.username,type:user.type};
         jwt.sign(payload,config.secret,(err,token)=>{
-            res.status(200).send({"token": token,type:user.type})
+            res.status(200).send({"token": token})
         })
       }else{
          res.status(400).send("Password Incorrect");
