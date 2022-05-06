@@ -3,7 +3,7 @@ const Joi = require("@hapi/joi");
 const { string } = require("@hapi/joi");
 
  const schema = new mongoose.Schema({
-     user:{type:String, required:true},
+     username:{type:String, required:true},
      email:{type:String, required:true},
      password:{type: String , required: true},
      type:{type:String, default: "user"},
@@ -16,7 +16,7 @@ const User = mongoose.model("User",schema);
 
  const validateUser = (user) => {
 const schema = Joi.object({
-        user: Joi.string().min(5).max(100).required(),
+        username: Joi.string().min(5).max(100).required(),
         email: Joi.string().email().min(5).max(500).required(),
         password: Joi.string().min(8).max(1024).required(),
   

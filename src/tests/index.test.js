@@ -48,6 +48,7 @@ describe('API', () => {
                 .post('/signup')
                 // send user registration details
                 .send({
+                         'username':'alain',
                         'email': 'Ronaldomessi@gmail.com',
                         'password': 'Testertester',
                     }
@@ -80,6 +81,7 @@ describe('API', () => {
                 .post('/signup')
                 // send user registration details
                 .send({
+                    'username': 'alain',
                     'email': 'Ronaldomessi@gmail.com',
                     'password': 'tet',
                     }
