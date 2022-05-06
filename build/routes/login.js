@@ -120,8 +120,7 @@ router.post("/", /*#__PURE__*/function () {
             };
             jwt.sign(payload, config.secret, function (err, token) {
               res.status(200).send({
-                "token": token,
-                type: user.type
+                "token": token
               });
             });
             _context2.next = 14;

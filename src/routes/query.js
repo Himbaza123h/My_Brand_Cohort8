@@ -100,8 +100,8 @@ router.post("/", validateMiddleware(validateQuery) ,async (req,res) =>{
     const newQuery = new Query({
         name : req.body.username,
         email : req.body.email,
-        message: req.body.message,
         subject: req.body.subject,
+        message: req.body.message
         })
 
     await newQuery.save();
