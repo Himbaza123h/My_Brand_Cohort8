@@ -32,7 +32,7 @@ var Query = mongoose.model("Query", schema);
 
 var validateQuery = function validateQuery(query) {
   var schema = Joi.object({
-    username: Joi.string().min(5).max(500).required(),
+    name: Joi.string().min(5).max(500).required(),
     email: Joi.string().email().min(5).max(1024).required(),
     subject: Joi.string().min(10).max(500).required(),
     message: Joi.string().min(10).max(500).required()

@@ -141,36 +141,40 @@ router.post("/", validateMiddleware(validateQuery), /*#__PURE__*/function () {
         switch (_context2.prev = _context2.next) {
           case 0:
             _context2.prev = 0;
-            newQuery = new Query({
-              name: req.body.username,
+            _context2.next = 3;
+            return new Query({
+              name: req.body.name,
               email: req.body.email,
-              message: req.body.message,
-              subject: req.body.subject
+              subject: req.body.subject,
+              message: req.body.message
             });
-            _context2.next = 4;
+
+          case 3:
+            newQuery = _context2.sent;
+            _context2.next = 6;
             return newQuery.save();
 
-          case 4:
+          case 6:
             res.status(201).send({
               "Message": "New Query submitted successfully"
             });
-            _context2.next = 11;
+            _context2.next = 13;
             break;
 
-          case 7:
-            _context2.prev = 7;
+          case 9:
+            _context2.prev = 9;
             _context2.t0 = _context2["catch"](0);
             console.log(req.body);
             res.status(400).send({
               error: "There was a problem submitting the query"
             });
 
-          case 11:
+          case 13:
           case "end":
             return _context2.stop();
         }
       }
-    }, _callee2, null, [[0, 7]]);
+    }, _callee2, null, [[0, 9]]);
   }));
 
   return function (_x3, _x4) {

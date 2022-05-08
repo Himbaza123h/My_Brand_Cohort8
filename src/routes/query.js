@@ -97,8 +97,8 @@ router.get("/", verifyToken ,async (req,res)=>{
 
 router.post("/", validateMiddleware(validateQuery) ,async (req,res) =>{
    try {
-    const newQuery = new Query({
-        name : req.body.username,
+    const newQuery =await new Query({
+        name : req.body.name,
         email : req.body.email,
         subject: req.body.subject,
         message: req.body.message

@@ -35,6 +35,8 @@ router.get("/", function (req, res) {
  *             schema:
  *               type: object
  *               properties:
+ *                 username:
+ *                   type: string
  *                 email:
  *                   type: string
  *                 password:
@@ -90,6 +92,7 @@ router.post("/", validateMiddleWare(validateUser), /*#__PURE__*/function () {
           case 11:
             hashedPassword = _context.sent;
             user = new User({
+              username: req.body.username,
               email: req.body.email,
               password: hashedPassword,
               type: "user"

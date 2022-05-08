@@ -76,6 +76,7 @@ describe('API', function () {
       chai.request(server) // register request
       .post('/signup') // send user registration details
       .send({
+        'username': 'alain',
         'email': 'Ronaldomessi@gmail.com',
         'password': 'Testertester'
       }).end(function (err, res) {
@@ -100,6 +101,7 @@ describe('API', function () {
       chai.request(server) // register request
       .post('/signup') // send user registration details
       .send({
+        'username': 'alain',
         'email': 'Ronaldomessi@gmail.com',
         'password': 'tet'
       }).end(function (err, res) {
