@@ -39,9 +39,12 @@
     "cloudinary-core": "^2.12.3",
     "config": "^3.3.7",
     "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.0.0",
     "express": "^4.17.2",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.1.8",
+    "multer": "^1.4.4",
     "streamifier": "^0.1.1",
     "swagger-jsdoc": "^6.1.0",
     "swagger-ui-express": "^4.3.0"

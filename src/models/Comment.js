@@ -4,6 +4,7 @@ const Joi = require('@hapi/joi')
  const schema = new mongoose.Schema({
      articleId:{type:String, required:true},
      comment:{type:String, required:true},
+     date: { type: Date, default: Date.now },
      userId:{type: String , required: true},     
  },{
      versionKey:false

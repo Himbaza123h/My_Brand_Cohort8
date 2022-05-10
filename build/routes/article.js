@@ -4,6 +4,8 @@ var _verifyToken = require("../controllers/verifyToken");
 
 var _validateMiddleware = _interopRequireDefault(require("../middlewares/validateMiddleware"));
 
+var _cloudinary = _interopRequireDefault(require("../imageconfig/cloudinary.js"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -184,12 +186,25 @@ router.get("/:id", /*#__PURE__*/function () {
 *     summary: Add New Article
 *     tags:
 *       - Article
-*     requestBody:
-*       required: true
-*       content:
-*         application/json:
-*             schema:
-*               $ref: '#/components/schemas/Article' 
+*     parameters:
+*        - name: Image
+*          in: formdata
+*          required: true
+*          schema:
+*            type: file
+*          description: The Image of the Article
+*        - name: heading
+*          in: formData
+*          required: true
+*          schema:
+*            type: string
+*          description: The heading of the Article
+*        - name: Content
+*          in: formData
+*          required: true
+*          schema:
+*            type: string
+*          description: The content of the Article
 *     responses:
 *       '400':
 *         description: Bad Request 
@@ -206,45 +221,51 @@ router.get("/:id", /*#__PURE__*/function () {
 
 router.post("/", _verifyToken.verifyToken, (0, _validateMiddleware["default"])(validateArticle), /*#__PURE__*/function () {
   var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(req, res) {
-    var newArticle;
+    var result, newArticle;
     return regeneratorRuntime.wrap(function _callee3$(_context3) {
       while (1) {
         switch (_context3.prev = _context3.next) {
           case 0:
             _context3.prev = 0;
             _context3.next = 3;
+            return _cloudinary["default"].uploader.upload(req.file.path);
+
+          case 3:
+            result = _context3.sent;
+            _context3.next = 6;
             return new Article({
               heading: req.body.heading,
               content: req.body.content,
               userId: req.user["id"],
+              //image : result.url,
               image: req.body.image
             });
 
-          case 3:
+          case 6:
             newArticle = _context3.sent;
-            _context3.next = 6;
+            _context3.next = 9;
             return newArticle.save();
 
-          case 6:
+          case 9:
             res.status(201).send({
               Message: "New Article Created"
             });
-            _context3.next = 12;
+            _context3.next = 15;
             break;
 
-          case 9:
-            _context3.prev = 9;
+          case 12:
+            _context3.prev = 12;
             _context3.t0 = _context3["catch"](0);
             res.status(400).send({
               error: "There was a problem publishing the article"
             }); //    console.log(error)
 
-          case 12:
+          case 15:
           case "end":
             return _context3.stop();
         }
       }
-    }, _callee3, null, [[0, 9]]);
+    }, _callee3, null, [[0, 12]]);
   }));
 
   return function (_x5, _x6) {

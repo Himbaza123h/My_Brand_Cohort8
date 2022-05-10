@@ -53,7 +53,7 @@ router.post("/",async(req,res)=>{
    const user = await User.findOne({email: req.body.email})
   
    if (user == null) {
-       return res.status(400).send({"Message":"Cannot Find User"})
+       return res.status(400).send({"Message":"Credintials doesn't macth"})
    }
    try {
       if(await bcrypt.compare(req.body.password, user.password)){

@@ -7,7 +7,7 @@ const {validateLike,Like } = require("../models/Like");
 const {validateDislike,Dislike } = require("../models/Dislike");
 import { verifyToken } from "../controllers/verifyToken";
 import validateMiddleware from "../middlewares/validateMiddleware";
-
+import cloudinary from "../imageconfig/cloudinary.js";
 /**
  * @swagger
  * security:
@@ -105,12 +105,25 @@ router.get("/:id", async (req,res) =>{
 *     summary: Add New Article
 *     tags:
 *       - Article
-*     requestBody:
-*       required: true
-*       content:
-*         application/json:
-*             schema:
-*               $ref: '#/components/schemas/Article' 
+*     parameters:
+*        - name: Image
+*          in: formdata
+*          required: true
+*          schema:
+*            type: file
+*          description: The Image of the Article
+*        - name: heading
+*          in: formData
+*          required: true
+*          schema:
+*            type: string
+*          description: The heading of the Article
+*        - name: Content
+*          in: formData
+*          required: true
+*          schema:
+*            type: string
+*          description: The content of the Article
 *     responses:
 *       '400':
 *         description: Bad Request 
@@ -127,12 +140,13 @@ router.get("/:id", async (req,res) =>{
 router.post("/",verifyToken, validateMiddleware(validateArticle), async (req,res) =>{
    // console.log(req.body)
    try {
-    
+    const result = await cloudinary.uploader.upload(req.file.path);
     const newArticle =await new Article({
         heading : req.body.heading,
         content : req.body.content,
         userId: req.user["id"],
-        image : req.body.image,
+        //image : result.url,
+        image: req.body.image
         })
        // console.log(req.user["id"])
      await newArticle.save();
@@ -442,6 +456,7 @@ router.post("/:id/comments",verifyToken,validateMiddleWare(validateComment) , as
          articleId : req.body.articleId,
          comment:req.body.comment,
          userId : req.user["id"]
+         
          })
  
          await newComment.save();

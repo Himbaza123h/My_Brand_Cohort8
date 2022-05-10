@@ -17,6 +17,9 @@ var schema = new mongoose.Schema({
     type: String,
     required: true
   },
+  cloudinary_id: {
+    type: String
+  },
   userId: {
     type: String,
     required: true
@@ -34,7 +37,8 @@ var validateArticle = function validateArticle(article) {
   var schema = Joi.object({
     heading: Joi.string().min(20).max(200).required(),
     content: Joi.string().min(30).max(1000).required(),
-    image: Joi.string()
+    image: Joi.string(),
+    cloudinary_id: Joi.string()
   });
   return schema.validate(article);
 };
