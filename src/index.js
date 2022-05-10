@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 const cors = require("cors")
 const swaggerJSDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express")
-
 const api = require("./routes/api")
 const articleRoutes = require("./routes/article")
 const queryRouter = require("./routes/query")
@@ -17,7 +16,6 @@ const signupRouter = require("./routes/sign-up")
 const PORT = process.env.PORT || 5000;
 const config = require("config");
 const req = require("express/lib/request");
-
 const swaggerDefinition = {
         openapi: '3.0.0',
         info: {

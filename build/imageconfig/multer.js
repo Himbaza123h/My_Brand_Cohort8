@@ -1,36 +1,23 @@
 "use strict";
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports["default"] = void 0;
+var multer = require("multer");
 
-var _multer = _interopRequireDefault(require("multer"));
-
-var _fs = _interopRequireDefault(require("fs"));
-
-var _path = _interopRequireDefault(require("path"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-// Let us start uploading
-if (!_fs["default"].existsSync("./uploads")) {
-  _fs["default"].mkdirSync("./uploads");
-} //Set up
+var path = require("path"); //import fs from "fs";
+// import path from 'path';
+// Multer config
 
 
-var storage = _multer["default"].diskStorage({
-  destination: function destination(req, file, cb) {
-    cb(null, "./uploads");
-  },
-  filename: function filename(req, file, cb) {
-    cb(null, Date.now() + '-' + file.originalname);
+module.exports = multer({
+  storage: multer.diskStorage({}),
+  fileFilter: function fileFilter(req, file, cb) {
+    var ext = path.extname(file.originalname);
+
+    if (ext !== ".jpg" && ext !== ".jpeg" && ext !== ".png") {
+      cb(new Error("File type is not supported"), false);
+      return;
+    }
+
+    cb(null, true);
   }
 });
-
-var upload = (0, _multer["default"])({
-  storage: storage
-});
-var _default = upload;
-exports["default"] = _default;
 //# sourceMappingURL=multer.js.map

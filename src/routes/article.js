@@ -7,7 +7,10 @@ const {validateLike,Like } = require("../models/Like");
 const {validateDislike,Dislike } = require("../models/Dislike");
 import { verifyToken } from "../controllers/verifyToken";
 import validateMiddleware from "../middlewares/validateMiddleware";
-import cloudinary from "../imageconfig/cloudinary.js";
+import upload from "../imageconfig/multer";
+import cloudinary from "../imageconfig/cloudinary";
+
+
 /**
  * @swagger
  * security:
@@ -137,18 +140,21 @@ router.get("/:id", async (req,res) =>{
 *                 Message:
 *                   type: string
 */
-router.post("/",verifyToken, validateMiddleware(validateArticle), async (req,res) =>{
+router.post("/",verifyToken, validateMiddleware(validateArticle), upload.single('image'), async (req,res) =>{
    // console.log(req.body)
    try {
     const result = await cloudinary.uploader.upload(req.file.path);
+   // Create an instant of articles
     const newArticle =await new Article({
         heading : req.body.heading,
         content : req.body.content,
+        cloudinary_id: result.public_id,
         userId: req.user["id"],
-        //image : result.url,
-        image: req.body.image
+        image : result.secure_url,
+        //image: req.body.image
         })
-       // console.log(req.user["id"])
+       //console.log(result)
+       // Save an article
      await newArticle.save();
 
      res.status(201).send({Message:"New Article Created"})     
@@ -156,7 +162,7 @@ router.post("/",verifyToken, validateMiddleware(validateArticle), async (req,res
        res.status(400).send({error:"There was a problem publishing the article"})
     //    console.log(error)
    }
-})
+}) 
 
 /** 
 * @swagger
@@ -244,7 +250,7 @@ router.patch("/:id",verifyToken, validateMiddleware(validateArticle), async (req
  *          description: Article not found
  */
 
-router.delete("/articleId", verifyToken, async (req, res) => {
+router.delete("/:id", verifyToken, async (req, res) => {
 	try {
     let articleUser = await Article.findOne({_id: req.params.id})
         if (req.user["id"] == articleUser["userId"]) {

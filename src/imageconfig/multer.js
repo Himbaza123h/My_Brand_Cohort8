@@ -1,13 +1,24 @@
-import multer from "multer";
-import fs from "fs";
+import multer from "multer"
+import  fs from "fs";
 import path from 'path';
 
-// Let us start uploading
+// Multer config
+/*module.exports = multer({
+    storage: multer.diskStorage({}),
+    fileFilter: (req, file, cb) => {
+        let ext = path.extname(file.originalname);
+        if (ext !== ".jpg" && ext !==".jpeg" && ext !== ".png") {
+            cb(new Error("File type is not supported"), false);
+        return;
+        }
+        cb(null, true);
+    }
+});*/
 if (!fs.existsSync("./uploads")) {
     fs.mkdirSync("./uploads");
 }
-
-//Set up
+  
+// Multer setup
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, "./uploads");
@@ -17,5 +28,7 @@ const storage = multer.diskStorage({
     },
 });
 
+  
 const upload = multer({ storage: storage });
+
 export default upload;
