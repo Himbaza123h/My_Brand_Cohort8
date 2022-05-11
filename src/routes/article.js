@@ -138,7 +138,7 @@ router.post("/",verifyToken, validateMiddleware(validateArticle), async (req,res
 
      res.status(201).send({Message:"New Article Created"})     
    } catch (error){
-       res.status(400).send({error:"There was a problem publishing the article"})
+       res.status(400).send({error:error})
     //    console.log(error)
    }
 })
@@ -178,8 +178,8 @@ router.delete("/:id", verifyToken, async (req, res) => {
         } else {
             res.status(401).send({Message:"Not Authorized to perform this operation"})
         }
-	} catch {
-		res.status(404).send({ error: "This article doesn't exist!" })
+	} catch(error) {
+		res.status(404).send({ error: error })
 	}
 })
 

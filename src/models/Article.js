@@ -17,8 +17,8 @@ const Article = mongoose.model("Article",schema);
 
 const validateArticle = (article) => {
   const schema = Joi.object({
-      heading:Joi.string().min(20).max(200).required(),
-      content:Joi.string().min(30).max(1000).required(),
+      heading:Joi.string().min(8).max(200).required(),
+      content:Joi.string().min(12).max(1000).required(),
       image: Joi.string(),
   })
 
