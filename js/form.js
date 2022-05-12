@@ -1,114 +1,258 @@
-new JustValidate('.fcf-form-class', {
-    rules: {
-        "Name": {
-            "required": true,
-            "minLength": 1,
-            "maxLength": 100
-        },
-        "Email": {
-            "required": true,
-            "minLength": 1,
-            "maxLength": 100,
-            "email": true
-        },
-        "Message": {
-            "required": true,
-            "minLength": 1,
-            "maxLength": 3000
-        }
-    },
-    colorWrong: '#dc3545',
-    focusWrongField: true,
-    submitHandler: function (cform, values, ajax) {
-
-        var button_value = getButtonValue('fcf-button');
-        disableButton('fcf-button');
-        ajax({
-            url: cform.getAttribute('action'),
-            method: 'POST',
-            data: values,
-            async: true,
-            callback: function (response) {
-                var done = false;
-                if (response.indexOf('Fail:') == 0) {
-                    // configration problem
-                    showFailMessage(response);
-                    enableButon('fcf-button', button_value);
-                    done = true;
-                }
-
-                if (response.indexOf('Error:') == 0) {
-                    // validation problem
-                    showErrorMessage(response);
-                    enableButon('fcf-button', button_value);
-                    done = true;
-                }
-
-                if (response.indexOf('Success') == 0) {
-                    showSuccessMessage(response);
-                    done = true;
-                }
-
-                if (response.indexOf('Debug:') == 0) {
-                    showDebugMessage(response);
-                    enableButon('fcf-button', button_value);
-                    done = true;
-                }
-
-                if (done == false) {
-                    showErrorMessage('Error:Sorry, an unexpected error occurred. Please try later.');
-                    enableButon('fcf-button', button_value);
-                }
-
+function validate(schema, object) {
+    // return new Promise((resolve, reject) => {
+    this.objectSchema = {};
+    let errors = {};
+    let validated = {};
+    for (let key in schema) {
+      this.objectSchema[key] = {
+        rules: schema[key].split(","),
+      };
+    }
+    for (let key in object) {
+      if (this.objectSchema[key]) {
+        errors[key] = [];
+        for (let rule of this.objectSchema[key].rules) {
+          let result = separator(rule);
+          if (validateFunctions.checkType(result.type)) {
+            let valid;
+            if (result.type !== "reference") {
+              valid = validateFunctions[result.type](
+                object[key],
+                result.min,
+                result.max
+              );
+            } else {
+              valid = validateFunctions[result.type](
+                object[key],
+                object[result.reference]
+              );
             }
-        });
-
+            if (valid.errors) {
+              errors[key].push(...valid.errors);
+              break;
+            } else validated[key] = valid.value;
+          } else {
+            throw new Error("invalid schema");
+          }
+        }
+        if (!errors[key].length) delete errors[key];
+      }
+    }
+    if (Object.keys(errors).length) {
+      return { value: null, errors };
+    }
+    return { value: validated };
+    // });
+  }
+  
+  function withForm(target, schema, onSuccess) {
+    let form = document.querySelector(`#${target}`);
+    if (!form) return console.log(`form with id ${target}  not found`);
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      let object = {};
+      for (let key in schema) {
+        if (form[key]) {
+          object[key] = form[key].value;
+          form[key].classList.add("success");
+        }
+      }
+      let result = validate(schema, object);
+      if (result.errors && Object.keys(result.errors).length) {
+        for (let errorKey in result.errors) {
+          appendFor(form[errorKey], result.errors[errorKey], errorKey);
+        }
+      } else {
+        for (let key in schema) {
+          if (form[key]) {
+            form[key].classList.remove("error");
+            form[key].classList.remove("success");
+            form[key].value = "";
+            // object[element].element = form[key].value;
+          }
+        }
+        return onSuccess(result.value);
+  
+    
+      }
+    });
+  }
+  function appendFor(target, error, errorKey, classList = [], timeout = 3000) {
+    if (!target) return "";
+    target.classList.remove("success");
+    target.classList.add("error");
+    let errorElement = document.getElementById(`error-${errorKey}`);
+    if (errorElement) errorElement.textContent;
+    else errorElement = document.createElement("div");
+    errorElement.textContent = errorKey + " " + error;
+    errorElement.id = `error-${errorKey}`;
+    errorElement.classList.add("error-box");
+    target.parentNode.append(errorElement);
+    setTimeout(() => {
+      errorElement.textContent = "";
+      target.classList.remove("error");
+    }, timeout);
+  }
+  
+  function separator(rule) {
+    let result = {};
+    if (!rule || !rule.includes("[")) {
+      result.type = rule.toLowerCase().replace(/[^a-z]/g, "");
+      return result;
+    }
+    rule = rule.replace(/\s/g, "");
+    let type = rule
+      .slice(0, rule.indexOf("["))
+      .replace(/[^a-z]/g, "")
+      .trim();
+    result.type = type;
+    rule = rule.slice(rule.indexOf("[")).trim();
+    const regex = /\[(\d*\:*\d*)\]/;
+    if (rule && regex.test(rule)) {
+      if (rule.includes(":")) {
+        let [min, max] = rule
+          .replace(/[\[\]\:]/g, " ")
+          .trim()
+          .split(" ");
+        if (max < min) {
+          let temp = max;
+          max = min;
+          min = temp;
+        }
+        if (!isNaN(max)) {
+          result.min = parseInt(min);
+          result.max = parseInt(max);
+        } else {
+          result.max = parseInt(min);
+        }
+  
+        return result;
+      }
+      let min = rule.replace(/[\[\]\:]/g, " ").trim();
+      result.min = parseInt(min);
+      return result;
+    } else if (rule && /\[(\w*)\]/.test(rule)) {
+      let reference = rule.replace(/[\[\]]/g, " ").trim();
+      result.reference = reference;
+    }
+    return result;
+  }
+  const validateFunctions = {
+    checkType: function (type) {
+      return ["string", "number", "required", "reference", "email"].includes(
+        type
+      );
     },
-});
-
-function getButtonValue(id) {
-    return document.getElementById(id).innerText;
-}
-
-function disableButton(id) {
-    document.getElementById(id).innerText = 'Please wait...';
-    document.getElementById(id).disabled = true;
-}
-
-function enableButon(id, val) {
-    document.getElementById(id).innerText = val;
-    document.getElementById(id).disabled = false;
-}
-
-function showFailMessage(message) {
-    var display = '<strong>Unexpected errors. </strong>(form has been misconfigured)<br>';
-    display += message.substring(5);
-    document.getElementById('fcf-status').innerHTML = display;
-}
-
-function showErrorMessage(message) {
-    var display = '<strong>Validation problem:</strong><br>';
-    display += message.substring(6);
-    document.getElementById('fcf-status').innerHTML = display;
-}
-
-function showDebugMessage(message) {
-    var display = '<strong>Debug details.</strong><br>(Please remember to switch off DEBUG mode when done!)<br>';
-    display += message.substring(6);
-    document.getElementById('fcf-status').innerHTML = display;
-}
-
-// Removing this credit is NOT allowed
-// Please purchase a pro license for credit removal rights
-var creditcontainer = document.querySelector(".buttons");
-var creditdiv = document.createElement('div');
-
-
-function showSuccessMessage(message) {
-    var message = '<br><br>' + message.substring(8);
-    var content = document.getElementById('fcf-thank-you').innerHTML;
-    document.getElementById('fcf-thank-you').innerHTML = content + message;
-    document.getElementById('fcf-status').innerHTML = '';
-    document.getElementById('fcf-form').style.display = 'none';
-    document.getElementById('fcf-thank-you').style.display = 'block';
-}
+    string: function (data, minLength, maxLength) {
+      let errors = [];
+      if (typeof data !== "string") errors.push("not a string");
+      if (minLength && data.length < minLength)
+        errors.push(`can neither be blank nor less than ${minLength} characters`);
+      if (maxLength && data.length > -maxLength)
+        errors.push(`must be no more than ${maxLength} characters`);
+      if (errors.length) return { value: null, errors };
+      return { value: data };
+    },
+     number: function (data) {
+      let errors = [];
+      if (!data)
+        errors.push(`can't be blank`);
+      if (errors.length) return { value: null, errors };
+      return { value: data };
+    },
+   
+    required: function (data) {
+      let errors = [];
+      if (!data) errors.push("must be uploaded to continue");
+      if (errors.length) return { value: null, errors };
+      return { value: data };
+    },
+    reference: function (data, referenceData) {
+      let errors = [];
+      if (data !== referenceData) errors.push("don't match");
+      if (errors.length) return { value: null, errors };
+      return { value: data };
+    },
+    email: function (data) {
+      let errors = [];
+      if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(data))
+        errors.push("is not valid");
+      if (errors.length) return { value: null, errors };
+      return { value: data };
+    },
+  
+    
+    };
+  
+  let personalInfoSchema = {
+   Email:"email[10]",
+  subject: "string[5]",
+   Name: "required",
+   Message: "string[5]",
+   content: "number[1]",
+  };
+  
+  
+  function onSuccess(data) {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    
+    var raw = JSON.stringify({
+      "name": document.getElementsByid("Name").value,
+      "email": document.getElementById("Email1").value,
+      "subject": document.getElementById("subject").value,
+      "message": document.getElementById("Message").value
+    });
+    
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow'
+    };
+    fetch("https://my-brand-cohort8.herokuapp.com/queries", requestOptions)
+    .then(response => response.json())
+    .then((result) => {
+      console.log(result)
+    //window.location.href = "index.html";
+  })
+      .catch(error => console.log('error', error));
+    //console.log(data);
+  }
+  withForm("personalInfoForm", personalInfoSchema, onSuccess);
+  
+  
+  //This must be the part of this javascript page
+  
+  window.addEventListener("DOMContentLoaded", () => {
+    const toggler = document.querySelector("#toggler");
+    const nav = document.querySelector("#navigation");
+    const adminContent = document.querySelector("#admin-content");
+    const sidebar = document.querySelector("#sidebar");
+    if (toggler)
+      toggler.addEventListener("click", (e) => {
+        e.preventDefault();
+        nav.classList.toggle("height-0");
+        nav.parentNode.classList.toggle("active");
+        console.log(nav);
+      });
+  
+    const sidebarToggler = document.querySelector("#sidebar-toggler");
+    if (sidebarToggler)
+      sidebarToggler.addEventListener("click", () => {
+        sidebarToggler.parentElement.classList.toggle("active");
+        adminContent.classList.toggle("active");
+        sidebar.classList.toggle("active");
+      });
+  });
+  
+  const toast = function (description, timeOut = 3000) {
+    let element = document.createElement("div");
+    element.classList.add("toast");
+    element.innerHTML = description;
+    document.body.append(element);
+    element.classList.add("animated-bottom");
+    setTimeout(() => {
+      document.body.removeChild(element);
+    }, timeOut);
+  };

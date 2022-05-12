@@ -38,7 +38,41 @@ form.onsubmit = (e)=>{
   }
   //if eField and pField doesn't contains error class that mean user filled details properly
   if(!eField.classList.contains("error") && !pField.classList.contains("error")){
-    window.location.href = "admin/index.html"; //redirecting user to the specified url which is inside action attribute of form tag
-  }
-}
-
+    var myHeaders = new Headers();
+    //myHeaders.append("Authorization");
+    myHeaders.append("Content-Type", "application/json");
+    
+    var raw = JSON.stringify({
+      "email": document.getElementById("email").value,
+      "password": document.getElementById("password").value
+    });
+    const error = document.getElementById('form')
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow'
+    };
+    //fetch("https://my-brand-cohort8.herokuapp.com/login", requestOptions)
+    fetch("https://my-brand-cohort8.herokuapp.com/login", requestOptions)
+      .then(response => response.json())
+      .then((result) => {
+        if (result.token){
+        const p = document.getElementById('error12')
+         p.innerHTML = ""
+        window.localStorage.setItem("token", result.token);
+        // direct to dashboard
+        window.location.href = "admin/index.html"; //redirecting user to the specified url which is inside action attribute of form
+        } else{
+          
+          // this is form with id error
+          form.addEventListener('submit',(e)=>{
+            e.preventDefault();
+        
+          const p = document.getElementById('error12')
+          p.innerHTML = "Invalid credintials"
+          })
+	}
+	
+})
+  }}

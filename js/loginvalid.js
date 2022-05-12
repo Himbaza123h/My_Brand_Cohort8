@@ -93,7 +93,6 @@ function showDebugMessage(message) {
     display += message.substring(6);
     document.getElementById('btn btn-primary btn-md btn-block').innerHTML = display;
 }
-
 // Removing this credit is NOT allowed
 // Please purchase a pro license for credit removal rights
 var creditcontainer = document.querySelector(".buttons");

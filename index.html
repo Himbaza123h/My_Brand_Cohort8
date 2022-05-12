@@ -35,7 +35,7 @@ padding-left: 2.5rem;
         left: 0;
         z-index: 1030; border-color: #e7e7e7;" >
       <img src="img/logo.png" style="width:8%; margin-left: 10px;">
-      <div class="container-fluid" style="margin-left: 53%; padding-left:2.5rem;">
+      <div class="container-fluid" style="margin-left: 48%; padding-left:2.5rem;">
         <div class="collapse navbar-collapse">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
@@ -56,6 +56,9 @@ padding-left: 2.5rem;
             <li class="nav-item">
               <a class="nav-link" href="" data-bs-toggle="modal" data-bs-target="#exampleModal">Login</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="register.html">Signup</a>
+            </li>
           </ul>
         </div>
       </div>
@@ -65,30 +68,26 @@ padding-left: 2.5rem;
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Login </h5>
+            <h5 class="modal-title" id="exampleModalLabel">Login Form</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
            <div class="wrapper"5>
-    <header>Login Form</header>
     <form action="#">
       <div class="field email">
         <div class="input-area">
-          <input type="text" placeholder="Email Address">
-          
-          <i class="error error-icon fas fa-exclamation-circle"></i>
+          <input type="text" id="email" placeholder="Email Address">
         </div>
         <div class="error error-txt">Email can't be blank</div>
       </div>
       <div class="field password">
         <div class="input-area">
-          <input type="password" placeholder="Password">
-        
-          <i class="error error-icon fas fa-exclamation-circle"></i>
+          <input type="password" id="password" placeholder="Password">
         </div>
         <div class="error error-txt">Password can't be blank</div>
+        <div class=""></div>
       </div>
-      <div class="pass-txt"><a href="#">Forgot password?</a></div>
+      <p id="error12" style="color:red"></p>
       <input type="submit" value="Login">
     </form>
    
@@ -98,8 +97,10 @@ padding-left: 2.5rem;
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
           </div>
         </div>
+        
       </div>
     </div>
+    
     <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
       <div class="carousel-indicators">
         <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -113,7 +114,6 @@ padding-left: 2.5rem;
             <p class="slide">We are softwarre developers based in Nyamagabe</p>
           </div>
         </div>
-        <
       </div>
     
     </div>
@@ -239,7 +239,7 @@ padding-left: 2.5rem;
        <br><br><br>
       </center>
       <div class="album py-5 bg-light">
-        <div class="container">
+        <div class="container" id="alain">
           <div class="row">
             <div class="col-md-4">
               <div class="card mb-4 box-shadow">
@@ -248,7 +248,6 @@ padding-left: 2.5rem;
                   <p class="card-text">This is the way everybody get to know something about programming in easy way!!!!!!!! it will help you in a way better than to waste your time in others</p>
                   <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">
-                      <a href="BlogPages/bducu.html"><button type="button" class="btn btn-sm btn-outline-secondary">View </button></a>
                     </div>
                     <small class="text-muted">5 mins</small>
                   </div>
@@ -264,7 +263,6 @@ padding-left: 2.5rem;
                   <p class="card-text">Get to know something about us! will help you to achieve on your purposes today. because there is no gain without pain</p>
                   <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">
-                      <a href="BlogPages/b4.html"><button type="button" class="btn btn-sm btn-outline-secondary">View </button></a>
                     </div>
                     <small class="text-muted">7 mins</small>
                   </div>
@@ -278,7 +276,7 @@ padding-left: 2.5rem;
                   <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
                   <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">
-                      <a href="BlogPages/b5.html"><button type="button" class="btn btn-sm btn-outline-secondary">View</button></a>
+                      
                     </div>
                     <small class="text-muted">9 mins</small>
                   </div>
@@ -292,30 +290,37 @@ padding-left: 2.5rem;
             <a href="BlogPages/blog.html" class="btn btn-sm btn-outline-secondary">Explore More</a></div>
     </section>
 
-   <section id="contacts"><br><br>
+    <section id="contacts"><br><br>
       <h1><center>Contact us</center> </h1><br>
 <div id="fcf-form">
       <div class="row">
         <!--Grid column-->
         <div class="col-md-9 mb-md-0 mb-5">
-           <form class="fcf-form-class" id="freeversion" method="post" action="fcf-assets/fcf.process.php">
+           <form class="fcf-form-class" id="freeversion" method="post" action="">
 
                 <div class="field">
-                    <label for="Name" class="label has-text-weight-normal">Your name</label>
+                    <label for="Name" class="label has-text-weight-normal" id="name">Your name</label>
                     <div class="control">
                         <input type="text" name="Name" id="Name" class="input is-full-width" maxlength="100"
                             data-validate-field="Name">
                     </div>
                 </div>
                 <div class="field">
-                    <label for="Email" class="label has-text-weight-normal">Your email address</label>
+                    <label for="Email" class="label has-text-weight-normal" id="amail">Your email address</label>
                     <div class="control">
                         <input type="email" name="Email" id="Email" class="input is-full-width" maxlength="100"
                             data-validate-field="Email">
                     </div>
                 </div>
                 <div class="field">
-                    <label for="Message" class="label has-text-weight-normal">Your message</label>
+                  <label for="Email" class="label has-text-weight-normal" id="subject">Subject</label>
+                  <div class="control">
+                      <input type="text" name="subject" id="subject" class="input is-full-width" maxlength="100"
+                          data-validate-field="subject">
+                  </div>
+              </div>
+                <div class="field">
+                    <label for="Message" class="label has-text-weight-normal" id="message">Your message</label>
                     <div class="control">
                         <textarea name="Message" id="Message" class="textarea" maxlength="3000" rows="5" 
                         data-validate-field="Message"></textarea>
@@ -324,7 +329,7 @@ padding-left: 2.5rem;
                 <div id="fcf-status" class="fcf-status"></div>
                 <div class="field">
                     <div class="buttons">
-                        <button id="fcf-button" type="submit" class="button is-link is-medium">Send Message</button> 
+                        <button class="button is-link is-medium">Send Message</button> 
                     </div>
                 </div>
                 
@@ -332,6 +337,7 @@ padding-left: 2.5rem;
 
             
         </div>
+        <!--Grid column-->
         <!--Grid column-->
 
         <!--Grid column-->
@@ -357,11 +363,14 @@ padding-left: 2.5rem;
     </section>
   </body>
 </html>
- <script src="js/validate.js"></script>
-    <script src="js/form.js"></script>
-<script src="js/valid.js"></script>
-<script src="js/bootstrap.min.js"></script>
+
+<script src="d/bootstrap.min.js"></script>
 <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
-<script src="js/bootstrap.js"></script>
+<script src="d/bootstrap.js"></script>
 <script src="js/login.js"></script>
+<script src="js/blog.js"></script>
+<script src="js/form.js"></script>
+<script src="js/validate.js"></script>
+
+
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script> -->
