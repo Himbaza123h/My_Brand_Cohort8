@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
 let img ;
-
 document.addEventListener("DOMContentLoaded",function (e) {                 
   document.querySelector("#image").addEventListener("change",function(){
   const reader = new FileReader();
@@ -42,36 +39,3 @@ addform.addEventListener("submit",(e)=>{
          alert("Problem connecting to the server")
       })
     });
-=======
-=======
->>>>>>> 1a23486134e34121f8e9d822622b9224bc360e09
-const addform = document.getElementById("personalInfoForm")
-addform.addEventListener("submit",(e)=>{
-  e.preventDefault()
-  const token = window.localStorage.getItem("token")
-  
-  var myHeaders = new Headers();
-//myHeaders.append("", "");
-myHeaders.append("Authorization",'Bearer'+ " "+ token ) ;
-var formdata = new FormData();
-formdata.append("heading", document.getElementById("heading"));
-formdata.append("content", document.getElementById("content"));
-formdata.append("image", fileInput.files[0], document.getElementById("image"));
-
-var requestOptions = {
-  method: 'POST',
-  headers: myHeaders,
-  body: formdata,
-  redirect: 'follow'
-};
-
-fetch("https://my-brand-cohort8.herokuapp.com/articles", requestOptions)
-  .then(response => response.json())
-  .then((result) => console.log(result))
-  .catch(error => console.log('error', error));
-<<<<<<< HEAD
-})
->>>>>>> 1a23486134e34121f8e9d822622b9224bc360e09
-=======
-})
->>>>>>> 1a23486134e34121f8e9d822622b9224bc360e09

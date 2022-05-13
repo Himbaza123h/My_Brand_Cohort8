@@ -128,6 +128,7 @@ document.addEventListener("DOMContentLoaded",function (e) {
   
 })
 
+
      let id = [...document.location.search].splice(11).join("");
       fetch(`http://localhost:5000/article/${id}`, )
         .then(response => response.json())
@@ -166,6 +167,7 @@ document.addEventListener("DOMContentLoaded",function (e) {
     }
     )
 
+    
     </script>
     <script src="js/valid.js"></script>
   </body>

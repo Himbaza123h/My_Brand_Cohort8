@@ -16,7 +16,7 @@ addform.addEventListener("submit",(e)=>{
   
   var requestOptions = {
     method: 'POST',
-    headers: myHeaders,
+    headers: myHeadsers,
     body: raw,
     redirect: 'follow'
   };
